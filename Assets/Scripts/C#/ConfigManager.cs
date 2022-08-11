@@ -2,15 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoleController : MonoBehaviour
+public class ConfigManager : MonoBehaviour
 {
-    RoleState roleState;
-
-    void init(RoleState roleState)
-    {
-        this.roleState = roleState;
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +15,4 @@ public class RoleController : MonoBehaviour
     {
         
     }
-
-
 }

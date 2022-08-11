@@ -6,8 +6,13 @@ public class BuffManager
 {
     RoleState roleState;
 
-    public void init(RoleState roleState)
+    public BuffManager(RoleState roleState)
     {
         this.roleState = roleState;
+    }
+
+    public void init()
+    {
+        
     }
 }
