@@ -6,11 +6,11 @@ public class RoleState
 {
     public float speed;
     public float hp;
-    Game.Direction faceDirection;
+    Direction faceDirection;
 
     public void init()
     {
-        speed = 0;
+        speed = 5;
         hp = 0;
     }
 }

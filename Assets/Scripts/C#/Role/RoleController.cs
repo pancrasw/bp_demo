@@ -2,26 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoleController : MonoBehaviour
+//角色控制器，所有与角色相关的逻辑
+public class RoleController:MonoBehaviour
 {
-    RoleState roleState;
+    public RoleState roleState;
+    public float speed { get { return roleState.speed; }set { roleState.speed = value; } }
+    Vector3 _forwardDirection;
+    Vector3 forwardDirection { set { _forwardDirection = value; }get { return _forwardDirection; } }
+    RoleView roleView;
+    RoleConfigData roleConfigData;
 
-    void init(RoleState roleState)
+
+    public void init()
     {
-        this.roleState = roleState;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        roleState = new RoleState();
+        roleState.init();
+        roleView = GameObject.Find("Player").GetComponent<RoleView>();
+        roleView.init(this);
+        roleConfigData = new RoleConfigData();
+        roleConfigData.load();
     }
 
 

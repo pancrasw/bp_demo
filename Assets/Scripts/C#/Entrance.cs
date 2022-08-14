@@ -6,12 +6,7 @@ public class Entrance : MonoBehaviour
 {
     void Start()
     {
-        Game.getInstance().init();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Game game = Game.getInstance();
+        game.init();
     }
 }
