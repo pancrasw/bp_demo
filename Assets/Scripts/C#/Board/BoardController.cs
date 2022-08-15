@@ -9,14 +9,19 @@ public class BoardController
     public int width { get { return cur_board.width; } }
     public int length { get { return cur_board.length; } }
 
-    BlockType[,] grid;//数据
+    public BlockType[,] grid;//数据
     BoardView boardView;//地块视图
 
     public void init()
     {
+        initConfigData();
+        setEpisode(1);
+    }
+
+    public void initConfigData()
+    {
         boardConfigData = new BoardConfigData();
         boardConfigData.load();
-        
     }
 
     //关卡切换
@@ -24,13 +29,17 @@ public class BoardController
     {
         cur_board = boardConfigData.getBoardConfigItemByEpisode(episode);
         if (boardView == null)
-            boardView = GameObject.Find("Board").GetComponent<BoardView>();
+        {
+            boardView = GameObject.Find("BoardView").GetComponent<BoardView>();
+            boardView.init(this);
+        }
         randomizeAllBlock();
         boardView.updateAllBlock(true);
     }
 
     private void randomizeAllBlock()
     {
+        grid = new BlockType[width, length];
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < length; y++)

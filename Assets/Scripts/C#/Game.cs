@@ -5,32 +5,34 @@ using UnityEngine;
 public enum BlockType
 {
     Normal,
-    Used
+    Bleed
 }
 public enum Direction
 {
     UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT
 }
 
+public delegate void saveFunc(int id);
 
 public class Game
 {
-    public const string CONFIG_PATH = "C:/Users/LEGION/Documents/GitHub/bp_demo/Assets/Scripts/json";
+    //json配置文件路径
+    public const string CONFIG_PATH = "D:/unity/bp_demo/Assets/Scripts/json";
 
     //游戏显示配置
     public const int BLOCK_TYPE_COUNT = 2;//地块种类数量
-    public const float BLOCK_SIZE = 10;//地块尺寸
-    public const float ANGLE = 60;//俯视角度，90度为垂直向下正投影
+    public const float BLOCK_SIZE = 1;//地块尺寸
+    public const float ANGLE = 90;//俯视角度，90度为垂直向下正投影
 
 
-    public static readonly float ANGLE_FACTOR = Mathf.Sin(ANGLE);//计算后的俯视变形因子
+    public static readonly float ANGLE_FACTOR = Mathf.Sin(ANGLE * Mathf.PI / 180);//计算后的俯视变形因子
     public static readonly float BLOCK_LENGTH = BLOCK_SIZE * ANGLE_FACTOR;
     public static readonly float BLOCK_WIDTH = BLOCK_SIZE;
 
     public event callback GameStart;
     public event callback Pause;
-    public event callback Save;
-    public event callback Load;
+    public event saveFunc Save;
+    public event saveFunc Load;
     public static Game game;
     public BuffManager buffManager;
     public ConfigManager configManager;
@@ -49,16 +51,28 @@ public class Game
 
     private Game()
     {
-        mainCharacterController = GameObject.Find("Player").GetComponent<RoleController>();
         boardController = new BoardController();
+        mainCharacterController = new RoleController();
         configManager = new ConfigManager(CONFIG_PATH);
     }
 
     public void init()
     {
         Debug.Log("game init!");
-        mainCharacterController.init();
         initManager();
+        mainCharacterController.init();
+        boardController.init();
+        
+    }
+
+    public void onLoad(int id)
+    {
+        Load(id);
+    }
+
+    public void onSave(int id)
+    {
+        Save(id);
     }
 
     public void main()

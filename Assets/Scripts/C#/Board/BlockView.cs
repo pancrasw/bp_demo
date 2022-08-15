@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//普通地块
 public class BlockView : MonoBehaviour
 {
     BoardView boardView;
@@ -11,37 +12,48 @@ public class BlockView : MonoBehaviour
         get { return _coordinate; }
         set
         {
-            transform.position = boardView.getPosition(value);
+            transform.localPosition = boardView.getPosition(value);
             _coordinate = value;
         }
     }
     bool _used;
-    public GameObject normalPrefab;
-    public GameObject usedPrefab;
+    public GameObject normalGameObject;
+    public GameObject usedGameObject;
 
     public void init(BoardView boardView)
     {
         this.boardView = boardView;
+        transform.localScale = boardView.gameObject.transform.localScale;
     }
 
-    private void setUsed(bool used)
+    //是否被使用
+    public void setUsed(bool used)
     {
         if (used)
         {
-            normalPrefab.SetActive(false);
-            usedPrefab.SetActive(true);
+            normalGameObject.SetActive(false);
+            usedGameObject.SetActive(true);
         }
         else
         {
-            normalPrefab.SetActive(true);
-            usedPrefab.SetActive(false);
+            normalGameObject.SetActive(true);
+            usedGameObject.SetActive(false);
         }
         _used = used;
     }
 
+    //是否被选中
+    public void setSelected(bool selected)
+    {
+        SpriteRenderer spriteRenderer = normalGameObject.GetComponent<SpriteRenderer>();
+        if (selected)
+            spriteRenderer.color = new Color(0, 255, 255);//调为绿色
+        else
+            spriteRenderer.color = new Color(255, 255, 255);//原色
+    }
+
     public void onUse()
     {
-
-        
+        setUsed(true);
     }
 }
