@@ -55,5 +55,6 @@ public class BlockView : MonoBehaviour
     public void onUse()
     {
         setUsed(true);
+        boardView.boardController.onUse(this);
     }
 }

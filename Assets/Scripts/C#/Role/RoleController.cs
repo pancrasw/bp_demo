@@ -10,6 +10,7 @@ public class RoleController
     Vector3 _forwardDirection;
     Vector3 forwardDirection { set { _forwardDirection = value; }get { return _forwardDirection; } }
     RoleView roleView;
+    BloodView bloodView;
     RoleConfigData roleConfigData;
 
 
@@ -21,7 +22,18 @@ public class RoleController
         roleView.init(this);
         roleConfigData = new RoleConfigData();
         roleConfigData.load();
-        
+        bloodView = GameObject.Find("BloodBar").GetComponent<BloodView>();
+    }
+
+    //duration持续时间，以s为单位
+    public void bleed(float hpPerSecond, int duration)
+    {
+        bloodView.bleed(hpPerSecond, duration);
+    }
+
+    public int getHpLimit()
+    {
+        return roleConfigData.getRoleConfigItemByLevel(1).hp;//for test
     }
 
     //加载存档

@@ -55,4 +55,17 @@ public class BoardController
     {
         return grid[x, y];
     }
+
+    public void onUse(BlockView blockView)
+    {
+        BlockType blockType = getBlock(blockView.coordinate.x, blockView.coordinate.y);
+        switch (blockType)
+        {
+            case BlockType.Normal:
+                break;
+            case BlockType.Bleed:
+                Game.getInstance().mainCharacterController.bleed(0.5f, 10);//for test假数据
+                break;
+        }
+    }
 }

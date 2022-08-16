@@ -7,9 +7,24 @@ using UnityEngine.UI;
 public class BloodView : MonoBehaviour
 {
     RoleController roleController;
-    public float hp { get { return roleController.roleState.hp; }set { roleController.roleState.hp = value; } }
+    public float hp
+    {
+        get { return roleController.roleState.hp; }
+        set
+        {
+            Debug.Log(hp);
+            if (value > 0 && value < roleController.getHpLimit())
+            {
+                hpText.text = value.ToString();
+                roleController.roleState.hp = value;
+            }
+        }
+    }
     Image hpImage;//血量条
     Image limitImage;//血量上限条
+    public Text hpText;
+    public Text hpLimitTex;
+    List<SecondTimer> bleedTimers;//流血计时器，可叠加
 
     public void init(RoleController roleController)
     {
@@ -17,27 +32,17 @@ public class BloodView : MonoBehaviour
         Game.getInstance().Pause += () => { onPause(true); };
     }
 
-    //设置hp
-    public void setHp(float hp)
-    {
-
-    }
-
     //流血，参数为每秒掉血量
-    public void bleed(float hpPerSecond)
+    public void bleed(float hpPerSecond, int duration)
     {
-
+        if (bleedTimers == null)
+            bleedTimers = new List<SecondTimer>();
+        bleedTimers.Add(new SecondTimer(duration, () => { hp = hp - hpPerSecond; }));
     }
 
     //停止流血
     public void stopBleed()
     { }
-
-    //血量变化通知函数
-    public void onHpChange()
-    {
-        
-    }
 
     //暂定
     public void onPause(bool pause)
@@ -54,6 +59,15 @@ public class BloodView : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (bleedTimers != null && bleedTimers.Count > 0)//有流血计时器在计时
+        {
+            for (int i = bleedTimers.Count - 1; i >= 0; i--)
+            {
+                if (!bleedTimers[i].updateTimer(Time.deltaTime))
+                {
+                    bleedTimers.RemoveAt(i);
+                }
+            }
+        }
     }
 }

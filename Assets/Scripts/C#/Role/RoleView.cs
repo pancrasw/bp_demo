@@ -40,11 +40,6 @@ public class RoleView : MonoBehaviour
         return null;
     }
 
-    public void onHpChange()
-    {
-        bloodView.onHpChange();
-    }
-
     BlockView lastBlockView = null;
 
     void Update()
@@ -65,6 +60,8 @@ public class RoleView : MonoBehaviour
                 curBlock.onUse();
             }
         }
+        else if (lastBlockView != null)
+            lastBlockView.setSelected(false);
     }
 
 

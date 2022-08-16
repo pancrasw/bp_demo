@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BoardView: MonoBehaviour
 {
-    BoardController boardController;
+    public BoardController boardController;
     BlockType[,] grid;
     int width { get { return boardController.width; } }
     int length { get { return boardController.length; } }
@@ -69,11 +69,7 @@ public class BoardView: MonoBehaviour
     public void onUse(BlockView blockView)
     {
         BlockType type = boardController.getBlock(blockView.coordinate.x, blockView.coordinate.y);
-        switch (type)
-        {
-            case BlockType.Bleed:
-                
-        }
+        
     }
 
     // Start is called before the first frame update

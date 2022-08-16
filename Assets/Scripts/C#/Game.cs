@@ -36,9 +36,11 @@ public class Game
     public static Game game;
     public BuffManager buffManager;
     public ConfigManager configManager;
+    public SettlementManager settlementManager;
 
     public BoardController boardController;
-    public RoleController mainCharacterController;
+    public RoleController mainCharacterController
+        ;
 
     public static Game getInstance()
     {
@@ -54,6 +56,7 @@ public class Game
         boardController = new BoardController();
         mainCharacterController = new RoleController();
         configManager = new ConfigManager(CONFIG_PATH);
+        settlementManager = new SettlementManager();
     }
 
     public void init()
@@ -83,6 +86,7 @@ public class Game
     private void initManager()
     {
         configManager.init();
+        settlementManager.init();
     }
 
     // Start is called before the first frame update
