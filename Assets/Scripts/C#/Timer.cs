@@ -19,20 +19,22 @@ public delegate void CallbackPerSecond();
 //返回值：是否计时完毕
 public class SecondTimer
 {
-    int times;
+    int times = -1;
     CallbackPerSecond callback;
-    float startTime;
+    float startTime = 0;
     public SecondTimer(int times, CallbackPerSecond func)
     {
         this.times = times;
         callback = func;
-        startTime = 0;
+    }
+
+    public SecondTimer(CallbackPerSecond func)
+    {
+        callback = func;
     }
 
     public bool updateTimer(float deltaTime)
     {
-        Debug.Log(deltaTime);
-        Debug.Log(times);
         if (times == 0) return false;
         startTime += deltaTime;
         if (startTime > 1)
@@ -42,5 +44,10 @@ public class SecondTimer
             callback();
         }
         return true;
+    }
+
+    public void stopTimer()
+    {
+        times = 0;
     }
 }

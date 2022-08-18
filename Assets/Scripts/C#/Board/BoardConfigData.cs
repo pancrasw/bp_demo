@@ -7,6 +7,7 @@ public class BoardConfigData
     //配置文件名字
     const string config_file_name = "Board.Board";
     ConfigItemAry boardConfigItems;
+    
     public void load()
     {
         BoardConfigItem[] data = Game.getInstance().configManager.getConfigDataAry<BoardConfigItem>(config_file_name);
@@ -29,6 +30,7 @@ public class BoardConfigItem : ConfigItem
     public int length;//长度
     public int width;//宽度
     public int difficulty;//难度
+
     public override string getMainKey()
     {
         return episode.ToString();

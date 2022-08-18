@@ -7,13 +7,17 @@ public class RoleState
 {
     public float speed;
     public float hp;
+    public float hpLimit;
     Direction faceDirection;
-    public int leve;
+    public int level;
 
-    public void init()
+    public void init(int level, RoleConfigData roleConfigData)
     {
+        this.level = level;
+        Debug.Log("RoleState init.");
         speed = 5;
-        hp = 0;
+        hp = 100;
+        hpLimit = roleConfigData.getRoleConfigItemByLevel(level).hpLimit;
     }
 
     //加载存档

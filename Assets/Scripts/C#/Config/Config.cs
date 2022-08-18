@@ -18,7 +18,6 @@ public class ConfigItemAry
     {
         foreach (ConfigItem config in configs)
         {
-            Debug.Log(config.getMainKey());
             if (config.getMainKey() == mainKey)
             {
                 return config;

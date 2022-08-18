@@ -12,13 +12,24 @@ public class BloodView : MonoBehaviour
         get { return roleController.roleState.hp; }
         set
         {
-            Debug.Log(hp);
-            if (value > 0 && value < roleController.getHpLimit())
+            if (value > 0 && value <= roleController.getHpLimit())
             {
                 hpText.text = value.ToString();
                 roleController.roleState.hp = value;
             }
+            else if (value <= 0)
+            {
+                roleController.roleState.hp = 0;
+                roleController.onDead();
+            }
+            else
+                hp = hpLimit;
         }
+    }
+    public float hpLimit
+    {
+        get { return roleController.roleState.hpLimit; }
+        set { roleController.roleState.hpLimit = value; }
     }
     Image hpImage;//血量条
     Image limitImage;//血量上限条
@@ -28,8 +39,10 @@ public class BloodView : MonoBehaviour
 
     public void init(RoleController roleController)
     {
+        Debug.Log("BloodView init.");
         this.roleController = roleController;
         Game.getInstance().Pause += () => { onPause(true); };
+        hp = hp;//刷新血量文本
     }
 
     //流血，参数为每秒掉血量
@@ -37,12 +50,27 @@ public class BloodView : MonoBehaviour
     {
         if (bleedTimers == null)
             bleedTimers = new List<SecondTimer>();
-        bleedTimers.Add(new SecondTimer(duration, () => { hp = hp - hpPerSecond; }));
+        bleedTimers.Add(new SecondTimer(duration, () => { reduceBlood(hpPerSecond); }));
+    }
+
+    public void reduceBlood(float damage)
+    {
+        hp = hp - damage;
+    }
+
+    public void restoreBlood(float hp)
+    {
+        this.hp += hp;
     }
 
     //停止流血
     public void stopBleed()
-    { }
+    {
+        foreach (SecondTimer bleedTimer in bleedTimers)
+        {
+            bleedTimer.stopTimer();
+        }
+    }
 
     //暂定
     public void onPause(bool pause)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-class RoleConfigData
+public class RoleConfigData
 {
     RoleConfigItem[] data;
     public void load()
@@ -20,9 +20,9 @@ class RoleConfigData
     }
 }
 
-class RoleConfigItem
+public class RoleConfigItem
 {
     public int level;
-    public int hp;
+    public int hpLimit;
     public int speed;
 }

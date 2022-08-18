@@ -5,7 +5,9 @@ using UnityEngine;
 public enum BlockType
 {
     Normal,
-    Bleed
+    Bleed,//流血
+    Mine,//地雷
+    Chest,//宝箱
 }
 public enum Direction
 {
@@ -20,7 +22,7 @@ public class Game
     public const string CONFIG_PATH = "D:/unity/bp_demo/Assets/Scripts/json";
 
     //游戏显示配置
-    public const int BLOCK_TYPE_COUNT = 2;//地块种类数量
+    public const int BLOCK_TYPE_COUNT = 4;//地块种类数量
     public const float BLOCK_SIZE = 1;//地块尺寸
     public const float ANGLE = 90;//俯视角度，90度为垂直向下正投影
 
@@ -39,8 +41,7 @@ public class Game
     public SettlementManager settlementManager;
 
     public BoardController boardController;
-    public RoleController mainCharacterController
-        ;
+    public RoleController mainCharacterController;
 
     public static Game getInstance()
     {

@@ -13,16 +13,17 @@ public class RoleController
     BloodView bloodView;
     RoleConfigData roleConfigData;
 
-
     public void init()
     {
+        Debug.Log("RoleController init.");
         roleState = new RoleState();
-        roleState.init();
         roleView = GameObject.Find("Player").GetComponent<RoleView>();
         roleView.init(this);
         roleConfigData = new RoleConfigData();
         roleConfigData.load();
+        roleState.init(0, roleConfigData);//for test
         bloodView = GameObject.Find("BloodBar").GetComponent<BloodView>();
+        bloodView.init(this);
     }
 
     //duration持续时间，以s为单位
@@ -31,15 +32,31 @@ public class RoleController
         bloodView.bleed(hpPerSecond, duration);
     }
 
+    public void reduceBlood(float damage)
+    {
+        bloodView.reduceBlood(damage);
+    }
+
+    public void restoreBlood(float hp)
+    {
+
+    }
+
     public int getHpLimit()
     {
-        return roleConfigData.getRoleConfigItemByLevel(1).hp;//for test
+        return roleConfigData.getRoleConfigItemByLevel(1).hpLimit;//for test
     }
 
     //加载存档
     public void loadSave(int id)
     {
         roleState.load(id);
+    }
+
+    //玩家死亡
+    public void onDead()
+    {
+
     }
 
     //存存档
