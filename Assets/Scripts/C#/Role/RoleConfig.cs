@@ -9,6 +9,7 @@ public class RoleConfigData
     {
         data = Game.getInstance().configManager.getConfigDataAry<RoleConfigItem>("Player.level");
     }
+
     public RoleConfigItem getRoleConfigItemByLevel(int level)
     {
         foreach (RoleConfigItem roleConfigItem in data)
@@ -23,6 +24,6 @@ public class RoleConfigData
 public class RoleConfigItem
 {
     public int level;
-    public int hpLimit;
+    public int hp;//血量上限
     public int speed;
 }

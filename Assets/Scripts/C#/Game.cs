@@ -18,9 +18,6 @@ public delegate void saveFunc(int id);
 
 public class Game
 {
-    //json配置文件路径
-    public const string CONFIG_PATH = "D:/unity/bp_demo/Assets/Scripts/json";
-
     //游戏显示配置
     public const int BLOCK_TYPE_COUNT = 4;//地块种类数量
     public const float BLOCK_SIZE = 1;//地块尺寸
@@ -39,6 +36,7 @@ public class Game
     public BuffManager buffManager;
     public ConfigManager configManager;
     public SettlementManager settlementManager;
+    public CameraController cameraController;
 
     public BoardController boardController;
     public RoleController mainCharacterController;
@@ -56,7 +54,7 @@ public class Game
     {
         boardController = new BoardController();
         mainCharacterController = new RoleController();
-        configManager = new ConfigManager(CONFIG_PATH);
+        configManager = new ConfigManager();
         settlementManager = new SettlementManager();
     }
 
@@ -64,9 +62,21 @@ public class Game
     {
         Debug.Log("game init!");
         initManager();
+        initController();
+    }
+    
+    private void initManager()
+    {
+        configManager.init();
+        settlementManager.init();
+    }
+
+    private void initController()
+    {
         mainCharacterController.init();
         boardController.init();
-        
+        cameraController = GameObject.Find("MainCamera").GetComponent<CameraController>();
+        cameraController.init(mainCharacterController);
     }
 
     public void onLoad(int id)
@@ -81,24 +91,8 @@ public class Game
 
     public void main()
     {
-        
-    }
-
-    private void initManager()
-    {
-        configManager.init();
-        settlementManager.init();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        init();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
 
     }
+
+
 }

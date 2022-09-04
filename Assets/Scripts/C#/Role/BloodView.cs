@@ -12,8 +12,10 @@ public class BloodView : MonoBehaviour
         get { return roleController.roleState.hp; }
         set
         {
+            Debug.Log("hpLimit:" + roleController.getHpLimit().ToString());
             if (value > 0 && value <= roleController.getHpLimit())
             {
+                Debug.Log(hp);
                 hpText.text = value.ToString();
                 roleController.roleState.hp = value;
             }
@@ -42,6 +44,7 @@ public class BloodView : MonoBehaviour
         Debug.Log("BloodView init.");
         this.roleController = roleController;
         Game.getInstance().Pause += () => { onPause(true); };
+        Debug.Log("hp:" + hp.ToString());
         hp = hp;//刷新血量文本
     }
 
@@ -75,13 +78,13 @@ public class BloodView : MonoBehaviour
     //暂定
     public void onPause(bool pause)
     {
-        
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame

@@ -26,6 +26,7 @@ public class RoleView : MonoBehaviour
         else//斜方向移动，位移乘根号2，保证移动速度不变
             position += (moveX * speed * Time.deltaTime * transform.right * Mathf.Sqrt(2) / 2 + moveY * speed * Time.deltaTime * transform.up * Mathf.Sqrt(2) / 2);
         transform.position = position;
+        
     }
 
     //获取当前脚底下的Block

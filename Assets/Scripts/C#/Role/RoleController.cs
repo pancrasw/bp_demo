@@ -12,6 +12,7 @@ public class RoleController
     RoleView roleView;
     BloodView bloodView;
     RoleConfigData roleConfigData;
+    public Vector3 characterPosition { get { return roleView.gameObject.transform.position; } }
 
     public void init()
     {
@@ -21,7 +22,7 @@ public class RoleController
         roleView.init(this);
         roleConfigData = new RoleConfigData();
         roleConfigData.load();
-        roleState.init(0, roleConfigData);//for test
+        roleState.init(1, roleConfigData);//for test
         bloodView = GameObject.Find("BloodBar").GetComponent<BloodView>();
         bloodView.init(this);
     }
@@ -44,7 +45,7 @@ public class RoleController
 
     public int getHpLimit()
     {
-        return roleConfigData.getRoleConfigItemByLevel(1).hpLimit;//for test
+        return roleConfigData.getRoleConfigItemByLevel(roleState.level).hp;//for test
     }
 
     //加载存档

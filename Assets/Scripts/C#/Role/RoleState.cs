@@ -17,7 +17,7 @@ public class RoleState
         Debug.Log("RoleState init.");
         speed = 5;
         hp = 100;
-        hpLimit = roleConfigData.getRoleConfigItemByLevel(level).hpLimit;
+        hpLimit = roleConfigData.getRoleConfigItemByLevel(level).hp;
     }
 
     //加载存档

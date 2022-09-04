@@ -9,9 +9,9 @@ public class ConfigManager:Manager
     readonly string CONFIG_PATH;
     Dictionary<string,string> configRawData;
 
-    public ConfigManager(string configPath)
+    public ConfigManager()
     {
-        CONFIG_PATH = configPath;
+        CONFIG_PATH = Path.CONFIG_PATH;
         configRawData = new Dictionary<string, string>();
     }
 
