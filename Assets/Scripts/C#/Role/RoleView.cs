@@ -64,6 +64,4 @@ public class RoleView : MonoBehaviour
         else if (lastBlockView != null)
             lastBlockView.setSelected(false);
     }
-
-
 }

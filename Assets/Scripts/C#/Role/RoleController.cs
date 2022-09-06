@@ -6,9 +6,9 @@ using UnityEngine;
 public class RoleController
 {
     public RoleState roleState;
-    public float speed { get { return roleState.speed; }set { roleState.speed = value; } }
+    public float speed { get { return roleState.speed; } set { roleState.speed = value; } }
     Vector3 _forwardDirection;
-    Vector3 forwardDirection { set { _forwardDirection = value; }get { return _forwardDirection; } }
+    Vector3 forwardDirection { set { _forwardDirection = value; } get { return _forwardDirection; } }
     RoleView roleView;
     BloodView bloodView;
     RoleConfigData roleConfigData;
@@ -46,6 +46,15 @@ public class RoleController
     public int getHpLimit()
     {
         return roleConfigData.getRoleConfigItemByLevel(roleState.level).hp;//for test
+    }
+
+    public Transform getRoleTransform()
+    {
+        if (roleView != null)
+        {
+            return roleView.transform;
+        }
+        return null;
     }
 
     //加载存档

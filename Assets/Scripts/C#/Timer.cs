@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public delegate void CompleteCallback();
+
 public class Timer
 {
     float endTime;
-    public Timer(float milisecond)
+    public Timer(float milisecond, CompleteCallback completeCallback)
     {
 
     }
 }
 
-//每秒调用一次函数
-public delegate void CallbackPerSecond();
+//每秒调用一次函数，返回值的布尔值表示是否继续进行
+public delegate bool CallbackPerSecond();
 
 //每秒一跳
 //times跳的次数
@@ -41,13 +43,12 @@ public class SecondTimer
         {
             startTime -= 1;
             times--;
-            callback();
+            if (!callback())
+            {
+                times = 0;
+                return false;
+            }
         }
         return true;
-    }
-
-    public void stopTimer()
-    {
-        times = 0;
     }
 }

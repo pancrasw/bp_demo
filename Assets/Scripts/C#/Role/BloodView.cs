@@ -12,10 +12,8 @@ public class BloodView : MonoBehaviour
         get { return roleController.roleState.hp; }
         set
         {
-            Debug.Log("hpLimit:" + roleController.getHpLimit().ToString());
             if (value > 0 && value <= roleController.getHpLimit())
             {
-                Debug.Log(hp);
                 hpText.text = value.ToString();
                 roleController.roleState.hp = value;
             }
@@ -37,7 +35,8 @@ public class BloodView : MonoBehaviour
     Image limitImage;//血量上限条
     public Text hpText;
     public Text hpLimitTex;
-    List<SecondTimer> bleedTimers;//流血计时器，可叠加
+    public bool stopBleed;//停止流血开关
+    int bleedTimerCount;
 
     public void init(RoleController roleController)
     {
@@ -51,28 +50,29 @@ public class BloodView : MonoBehaviour
     //流血，参数为每秒掉血量
     public void bleed(float hpPerSecond, int duration)
     {
-        if (bleedTimers == null)
-            bleedTimers = new List<SecondTimer>();
-        bleedTimers.Add(new SecondTimer(duration, () => { reduceBlood(hpPerSecond); }));
+        Game.getInstance().timerController.addSecondTimer(duration, () =>
+        {
+            reduceBlood(hpPerSecond);
+            if (stopBleed)
+            {
+                bleedTimerCount--;
+                if (bleedTimerCount == 0)//已清空则暂停停止流血
+                    stopBleed = false;
+                return false;
+            }
+            return true;
+        });
     }
 
     public void reduceBlood(float damage)
     {
         hp = hp - damage;
+        Game.getInstance().damageController.createDamageText(roleController.getRoleTransform(), damage);
     }
 
     public void restoreBlood(float hp)
     {
         this.hp += hp;
-    }
-
-    //停止流血
-    public void stopBleed()
-    {
-        foreach (SecondTimer bleedTimer in bleedTimers)
-        {
-            bleedTimer.stopTimer();
-        }
     }
 
     //暂定
@@ -90,15 +90,5 @@ public class BloodView : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (bleedTimers != null && bleedTimers.Count > 0)//有流血计时器在计时
-        {
-            for (int i = bleedTimers.Count - 1; i >= 0; i--)
-            {
-                if (!bleedTimers[i].updateTimer(Time.deltaTime))
-                {
-                    bleedTimers.RemoveAt(i);
-                }
-            }
-        }
     }
 }

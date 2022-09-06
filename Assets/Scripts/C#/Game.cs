@@ -33,13 +33,16 @@ public class Game
     public event saveFunc Save;
     public event saveFunc Load;
     public static Game game;
+    
     public BuffManager buffManager;
     public ConfigManager configManager;
     public SettlementManager settlementManager;
-    public CameraController cameraController;
 
+    public CameraController cameraController;
     public BoardController boardController;
     public RoleController mainCharacterController;
+    public DamageController damageController;
+    public TimerController timerController;
 
     public static Game getInstance()
     {
@@ -56,6 +59,8 @@ public class Game
         mainCharacterController = new RoleController();
         configManager = new ConfigManager();
         settlementManager = new SettlementManager();
+        damageController = new DamageController();
+        timerController = new TimerController();
     }
 
     public void init()
@@ -64,7 +69,7 @@ public class Game
         initManager();
         initController();
     }
-    
+
     private void initManager()
     {
         configManager.init();
@@ -77,6 +82,8 @@ public class Game
         boardController.init();
         cameraController = GameObject.Find("MainCamera").GetComponent<CameraController>();
         cameraController.init(mainCharacterController);
+        damageController.init();
+        timerController.init();
     }
 
     public void onLoad(int id)
@@ -93,6 +100,4 @@ public class Game
     {
 
     }
-
-
 }
