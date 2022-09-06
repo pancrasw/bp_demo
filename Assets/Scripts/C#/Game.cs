@@ -33,7 +33,7 @@ public class Game
     public event saveFunc Save;
     public event saveFunc Load;
     public static Game game;
-    
+
     public BuffManager buffManager;
     public ConfigManager configManager;
     public SettlementManager settlementManager;
@@ -60,7 +60,6 @@ public class Game
         configManager = new ConfigManager();
         settlementManager = new SettlementManager();
         damageController = new DamageController();
-        timerController = new TimerController();
     }
 
     public void init()
@@ -83,7 +82,13 @@ public class Game
         cameraController = GameObject.Find("MainCamera").GetComponent<CameraController>();
         cameraController.init(mainCharacterController);
         damageController.init();
+        timerController = GameObject.Find("Game").GetComponent<TimerController>();
         timerController.init();
+    }
+
+    public static void delayCall(callback callback, float duration)
+    {
+        Game.getInstance().timerController.addTimer(duration, () => { callback(); });
     }
 
     public void onLoad(int id)

@@ -7,9 +7,24 @@ public delegate void CompleteCallback();
 public class Timer
 {
     float endTime;
-    public Timer(float milisecond, CompleteCallback completeCallback)
+    float count;
+    CompleteCallback completeCallback;
+    public Timer(float durationMS, CompleteCallback completeCallback)
     {
+        endTime = durationMS;
+        this.completeCallback = completeCallback;
+        count = 0;
+    }
 
+    public bool updateTimer(float deltaTime)
+    {
+        count += deltaTime;
+        if (count >= endTime)
+        {
+            completeCallback();
+            return false;
+        }
+        return true;
     }
 }
 
@@ -35,6 +50,7 @@ public class SecondTimer
         callback = func;
     }
 
+    //返回true表示依然在运行
     public bool updateTimer(float deltaTime)
     {
         if (times == 0) return false;

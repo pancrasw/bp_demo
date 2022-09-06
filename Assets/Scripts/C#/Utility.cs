@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//无状态共用函数
 public class Utility
 {
 
@@ -23,7 +24,7 @@ public class RangeFloat
         float randomResult = Random.Range(min, max);
         if (randomNegative)
         {
-            if (Random.Range(0, 1) == 0)//一半几率为负数
+            if (Random.Range(0, 2) == 0)//一半几率为负数
             {
                 randomResult = -randomResult;
             }
