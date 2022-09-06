@@ -66,7 +66,7 @@ public class RoleController
     //玩家死亡
     public void onDead()
     {
-
+        
     }
 
     //存存档

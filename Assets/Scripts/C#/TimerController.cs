@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TimerController : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class TimerController : MonoBehaviour
     List<Timer> timers;
     List<SecondTimer> secondTimers;
     List<CompleteCallback> secondTimersCompeletCallback;
+    Text gameTimeText;
     public void init()
     {
         Debug.Log("TimerController init.");
@@ -15,6 +17,7 @@ public class TimerController : MonoBehaviour
         Debug.Log(timers.Count);
         secondTimers = new List<SecondTimer>();
         secondTimersCompeletCallback = new List<CompleteCallback>();
+        gameTimeText = GameObject.Find("Time").GetComponent<Text>();
     }
     public void addSecondTimer(int times, CallbackPerSecond callbackPerSecond, CompleteCallback completeCallback = null)
     {
@@ -32,8 +35,7 @@ public class TimerController : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
+    public void updateSecondTimer()
     {
         if (secondTimers != null && secondTimers.Count > 0)//有计时器在计时
         {
@@ -48,6 +50,10 @@ public class TimerController : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void updateTimer()
+    {
         if (timers != null && timers.Count > 0)
         {
             for (int i = timers.Count - 1; i >= 0; i--)
@@ -58,5 +64,17 @@ public class TimerController : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void updateGameTime()
+    {
+
+    }
+
+    void Update()
+    {
+        updateSecondTimer();
+        updateTimer();
+        gameTimeText.text = ((int)(Time.unscaledTime)).ToString();
     }
 }

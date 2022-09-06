@@ -16,6 +16,7 @@ public class BloodView : MonoBehaviour
             {
                 hpText.text = value.ToString();
                 roleController.roleState.hp = value;
+                hpImage.transform.localScale = new Vector3(hp / hpLimit, 1, 1);
             }
             else if (value <= 0)
             {
@@ -31,8 +32,8 @@ public class BloodView : MonoBehaviour
         get { return roleController.roleState.hpLimit; }
         set { roleController.roleState.hpLimit = value; }
     }
-    Image hpImage;//血量条
-    Image limitImage;//血量上限条
+    public Image hpImage;//血量条
+    public Image limitImage;//血量上限条
     public Text hpText;
     public Text hpLimitTex;
     public bool stopBleed;//停止流血开关
@@ -43,7 +44,6 @@ public class BloodView : MonoBehaviour
         Debug.Log("BloodView init.");
         this.roleController = roleController;
         Game.getInstance().Pause += () => { onPause(true); };
-        Debug.Log("hp:" + hp.ToString());
         hp = hp;//刷新血量文本
     }
 
