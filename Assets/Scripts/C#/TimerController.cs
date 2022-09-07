@@ -6,15 +6,17 @@ using UnityEngine.UI;
 public class TimerController : MonoBehaviour
 {
 
-    List<Timer> timers;
+    PriorityHeap<Timer> timerHeap;
     List<SecondTimer> secondTimers;
     List<CompleteCallback> secondTimersCompeletCallback;
     Text gameTimeText;
     public void init()
     {
         Debug.Log("TimerController init.");
-        timers = new List<Timer>();
-        Debug.Log(timers.Count);
+        timerHeap = new PriorityHeap<Timer>((Timer a, Timer b) =>
+        {
+            return a.getEndTimeStamp() < b.getEndTimeStamp();
+        });
         secondTimers = new List<SecondTimer>();
         secondTimersCompeletCallback = new List<CompleteCallback>();
         gameTimeText = GameObject.Find("Time").GetComponent<Text>();
@@ -26,8 +28,8 @@ public class TimerController : MonoBehaviour
     }
     public void addTimer(float durationMS, CompleteCallback completeCallback)
     {
-        timers.Add(new Timer(durationMS, completeCallback));
-        Debug.Log(timers.Count);
+        timerHeap.Add(new Timer(durationMS, completeCallback));
+        Debug.Log(timerHeap.Count);
     }
     // Start is called before the first frame update
     void Start()
@@ -54,21 +56,11 @@ public class TimerController : MonoBehaviour
 
     private void updateTimer()
     {
-        if (timers != null && timers.Count > 0)
+        while (timerHeap != null && timerHeap.Count > 0 && Time.time >= timerHeap.getTop().getEndTimeStamp())
         {
-            for (int i = timers.Count - 1; i >= 0; i--)
-            {
-                if (!(timers[i].updateTimer(Time.deltaTime)))
-                {
-                    timers.RemoveAt(i);
-                }
-            }
+            Timer timer = timerHeap.popup();
+            timer.complete();
         }
-    }
-
-    private void updateGameTime()
-    {
-
     }
 
     void Update()

@@ -6,20 +6,32 @@ public delegate void CompleteCallback();
 
 public class Timer
 {
-    float endTime;
+    float duration;
+    float endTimeStamp;
     float count;
     CompleteCallback completeCallback;
-    public Timer(float durationMS, CompleteCallback completeCallback)
+    public Timer(float duration, CompleteCallback completeCallback)
     {
-        endTime = durationMS;
+        this.duration = duration;
+        endTimeStamp = Time.time + this.duration;
         this.completeCallback = completeCallback;
         count = 0;
+    }
+
+    public float getEndTimeStamp()
+    {
+        return endTimeStamp;
+    }
+
+    public void complete()
+    {
+        completeCallback();
     }
 
     public bool updateTimer(float deltaTime)
     {
         count += deltaTime;
-        if (count >= endTime)
+        if (count >= duration)
         {
             completeCallback();
             return false;
