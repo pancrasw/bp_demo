@@ -8,9 +8,9 @@ public class SettlementManager : MonoBehaviour
 {
     RoleController roleController;
 
-    public void init()
+    public void Init()
     {
-        roleController = Game.getInstance().mainCharacterController;
+        roleController = Game.GetInstance().mainCharacterController;
     }
 
     //地块结算

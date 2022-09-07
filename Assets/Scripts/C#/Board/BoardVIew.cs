@@ -11,18 +11,20 @@ public class BoardView: MonoBehaviour
     int length { get { return boardController.length; } }
     GameObject[,] blockGOs;
     GameObject blockPrefab;
-    public void init(BoardController boardController)
+    public GameObject keyPrefab;
+    public GameObject BombPrefab;
+    public void Init(BoardController boardController)
     {
         this.boardController = boardController;
         grid = boardController.grid;
-        initPrefabs();
+        InitPrefabs();
         //调整地块尺寸
         transform.localScale = new Vector3(Game.BLOCK_WIDTH, Game.BLOCK_LENGTH);
     }
 
 
     //添加绑定
-    private void initPrefabs()
+    private void InitPrefabs()
     {
         blockPrefab = Resources.Load<GameObject>("Prefabs/NormalBlock");
     }
@@ -41,7 +43,7 @@ public class BoardView: MonoBehaviour
                     BlockType type = boardController.getBlock(x, y);
                     blockGOs[y, x] = Instantiate(blockPrefab);
                     BlockView blockView = blockGOs[y, x].GetComponent<BlockView>();
-                    blockView.init(this);
+                    blockView.Init(this);
                     blockView.transform.SetParent(transform);
                     blockView.coordinate = new Vector2Int(x, y);
                     

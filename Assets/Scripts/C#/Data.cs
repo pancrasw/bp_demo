@@ -5,10 +5,10 @@ using UnityEngine;
 //用户数据
 public abstract class Data
 {
-    public void init()
+    public void Init()
     {
         
     }
-    public abstract void save();
-    public abstract void load();
+    public abstract void Save();
+    public abstract void Load();
 }

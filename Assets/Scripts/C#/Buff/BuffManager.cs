@@ -11,7 +11,7 @@ public class BuffManager
         this.roleState = roleState;
     }
 
-    public void init()
+    public void Init()
     {
         
     }

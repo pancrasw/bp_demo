@@ -10,7 +10,7 @@ public class BoardConfigData
     
     public void load()
     {
-        BoardConfigItem[] data = Game.getInstance().configManager.getConfigDataAry<BoardConfigItem>(config_file_name);
+        BoardConfigItem[] data = Game.GetInstance().configManager.GetConfigDataAry<BoardConfigItem>(config_file_name);
         if (data != null)
         {
             boardConfigItems = new ConfigItemAry(data);

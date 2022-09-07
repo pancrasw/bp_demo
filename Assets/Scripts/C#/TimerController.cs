@@ -10,7 +10,7 @@ public class TimerController : MonoBehaviour
     List<SecondTimer> secondTimers;
     List<CompleteCallback> secondTimersCompeletCallback;
     Text gameTimeText;
-    public void init()
+    public void Init()
     {
         Debug.Log("TimerController init.");
         timerHeap = new PriorityHeap<Timer>((Timer a, Timer b) =>

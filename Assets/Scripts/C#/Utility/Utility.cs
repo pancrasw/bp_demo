@@ -25,14 +25,14 @@ public class Utility
     }
 
     //start包含，end不包含
-    private void helpQuickSort<T>(List<T> list, CompFunc<T> getKey, int start, int end)
+    private void helpQuickSort<T>(List<T> list, CompFunc<T> compFunc, int start, int end)
     {
         int less_i = start;
         int more_i = start;
         int pivot = end - 1;
         for (int i = 0; i < list.Count; i++)
         {
-
+            //Todo
         }
     }
 }

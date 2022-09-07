@@ -11,7 +11,7 @@ public class RoleView : MonoBehaviour
     float hp { get { return roleController.roleState.hp; } }
     BloodView bloodView;
 
-    public void init(RoleController roleController)
+    public void Init(RoleController roleController)
     {
         this.roleController = roleController;
     }

@@ -8,7 +8,17 @@ public enum BlockType
     Bleed,//流血
     Mine,//地雷
     Chest,//宝箱
+    Key,//钥匙
+    Bomb,//炸弹
+    Last,//空，用于计数
 }
+
+public enum Layer
+{
+    Block = -10,
+    Role = 0,
+}
+
 public enum Direction
 {
     UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT
@@ -19,7 +29,7 @@ public delegate void saveFunc(int id);
 public class Game
 {
     //游戏显示配置
-    public const int BLOCK_TYPE_COUNT = 4;//地块种类数量
+    public const int BLOCK_TYPE_COUNT = (int)(BlockType.Last);//地块种类数量
     public const float BLOCK_SIZE = 1;//地块尺寸
     public const float ANGLE = 90;//俯视角度，90度为垂直向下正投影
 
@@ -30,13 +40,13 @@ public class Game
 
     public event callback GameStart;
     public event callback Pause;
-    public event saveFunc Save;
-    public event saveFunc Load;
+
     public static Game game;
 
     public BuffManager buffManager;
     public ConfigManager configManager;
     public SettlementManager settlementManager;
+    public SaveManager saveManager;
 
     public CameraController cameraController;
     public BoardController boardController;
@@ -44,7 +54,7 @@ public class Game
     public DamageController damageController;
     public TimerController timerController;
 
-    public static Game getInstance()
+    public static Game GetInstance()
     {
         if (game == null)
         {
@@ -55,14 +65,16 @@ public class Game
 
     private Game()
     {
-        boardController = new BoardController();
-        mainCharacterController = new RoleController();
         configManager = new ConfigManager();
         settlementManager = new SettlementManager();
+        saveManager = new SaveManager();
+
+        boardController = new BoardController();
+        mainCharacterController = new RoleController();
         damageController = new DamageController();
     }
 
-    public void init()
+    public void Init()
     {
         Debug.Log("game init!");
         initManager();
@@ -71,34 +83,25 @@ public class Game
 
     private void initManager()
     {
-        configManager.init();
-        settlementManager.init();
+        configManager.Init();
+        settlementManager.Init();
+        saveManager.Init();
     }
 
     private void initController()
     {
-        mainCharacterController.init();
-        boardController.init();
+        mainCharacterController.Init();
+        boardController.Init();
         cameraController = GameObject.Find("MainCamera").GetComponent<CameraController>();
-        cameraController.init(mainCharacterController);
-        damageController.init();
+        cameraController.Init(mainCharacterController);
+        damageController.Init();
         timerController = GameObject.Find("Game").GetComponent<TimerController>();
-        timerController.init();
+        timerController.Init();
     }
 
     public static void delayCall(callback callback, float duration)
     {
-        Game.getInstance().timerController.addTimer(duration, () => { callback(); });
-    }
-
-    public void onLoad(int id)
-    {
-        Load(id);
-    }
-
-    public void onSave(int id)
-    {
-        Save(id);
+        Game.GetInstance().timerController.addTimer(duration, () => { callback(); });
     }
 
     public void main()

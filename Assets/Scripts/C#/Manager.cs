@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class Manager
 {
-    public abstract void init();
+    public abstract void Init();
 }

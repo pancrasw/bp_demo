@@ -20,7 +20,7 @@ public class BlockView : MonoBehaviour
     public GameObject normalGameObject;
     public GameObject usedGameObject;
 
-    public void init(BoardView boardView)
+    public void Init(BoardView boardView)
     {
         this.boardView = boardView;
         transform.localScale = boardView.gameObject.transform.localScale;

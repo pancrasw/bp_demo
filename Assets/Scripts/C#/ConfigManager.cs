@@ -15,12 +15,12 @@ public class ConfigManager:Manager
         configRawData = new Dictionary<string, string>();
     }
 
-    public override void init()
+    public override void Init()
     {
-        loadAllConfig();
+        LoadAllConfig();
     }
 
-    public void loadAllConfig()
+    public void LoadAllConfig()
     {
         DirectoryInfo dir = new DirectoryInfo(CONFIG_PATH);
         if (!dir.Exists)
@@ -34,12 +34,12 @@ public class ConfigManager:Manager
             if (fileInfo.Name.EndsWith(".json"))
             {
                 Debug.Log(fileInfo.Name);
-                loadConfig(fileInfo.Name);
+                LoadConfig(fileInfo.Name);
             }
         }
     }
 
-    public void loadConfig(string name)
+    public void LoadConfig(string name)
     {
         string json_str = File.ReadAllText(CONFIG_PATH + "/" + name);
         Debug.Log(json_str);
@@ -47,7 +47,7 @@ public class ConfigManager:Manager
     }
 
     //获取指定配置数据
-    public T[] getConfigDataAry<T>(string name)
+    public T[] GetConfigDataAry<T>(string name)
     {
         string json_str;
         if (configRawData.TryGetValue(name + ".json", out json_str)) 

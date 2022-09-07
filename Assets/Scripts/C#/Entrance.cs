@@ -6,7 +6,7 @@ public class Entrance : MonoBehaviour
 {
     void Start()
     {
-        Game game = Game.getInstance();
-        game.init();
+        Game game = Game.GetInstance();
+        game.Init();
     }
 }

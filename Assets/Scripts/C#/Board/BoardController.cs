@@ -13,13 +13,13 @@ public class BoardController
     public BlockType[,] grid;//数据
     BoardView boardView;//地块视图
 
-    public void init()
+    public void Init()
     {
-        initConfigData();
+        InitConfigData();
         setEpisode(1);
     }
 
-    public void initConfigData()
+    public void InitConfigData()
     {
         boardConfigData = new BoardConfigData();
         boardConfigData.load();
@@ -34,7 +34,7 @@ public class BoardController
         if (boardView == null)
         {
             boardView = GameObject.Find("BoardView").GetComponent<BoardView>();
-            boardView.init(this);
+            boardView.Init(this);
         }
         randomizeAllBlock();
         boardView.updateAllBlock(true);
@@ -62,18 +62,24 @@ public class BoardController
     public void onUse(BlockView blockView)
     {
         BlockType blockType = getBlock(blockView.coordinate.x, blockView.coordinate.y);
+        RoleController roleController = Game.GetInstance().mainCharacterController;
         switch (blockType)
         {
             case BlockType.Normal:
                 break;
             case BlockType.Bleed:
-                Game.getInstance().mainCharacterController.bleed(0.5f, 10);//for test假数据
+                roleController.bleed(0.5f, 10);//for test假数据
                 break;
             case BlockType.Mine:
-                Game.getInstance().mainCharacterController.reduceBlood(Random.Range(0, 10) * 3);
+                roleController.reduceBlood(Random.Range(0, 10) * 3);
                 break;
             case BlockType.Chest:
-                Game.getInstance().mainCharacterController.restoreBlood(20);//for test写死
+                roleController.restoreBlood(20);//for test写死
+                break;
+            case BlockType.Key:
+                GameObject keyGO = GameObject.Instantiate(boardView.keyPrefab);
+                keyGO.transform.position = new Vector3(blockView.transform.position.x, blockView.transform.position.y, keyGO.transform.position.z);
+                keyGO.GetComponent<Follower>().Init(roleController.getRoleTransform());
                 break;
         }
     }

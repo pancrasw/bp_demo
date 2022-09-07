@@ -39,18 +39,18 @@ public class BloodView : MonoBehaviour
     public bool stopBleed;//停止流血开关
     int bleedTimerCount;
 
-    public void init(RoleController roleController)
+    public void Init(RoleController roleController)
     {
-        Debug.Log("BloodView init.");
+        Debug.Log("BloodView Init.");
         this.roleController = roleController;
-        Game.getInstance().Pause += () => { onPause(true); };
+        Game.GetInstance().Pause += () => { onPause(true); };
         hp = hp;//刷新血量文本
     }
 
     //流血，参数为每秒掉血量
     public void bleed(float hpPerSecond, int duration)
     {
-        Game.getInstance().timerController.addSecondTimer(duration, () =>
+        Game.GetInstance().timerController.addSecondTimer(duration, () =>
         {
             reduceBlood(hpPerSecond);
             if (stopBleed)
@@ -67,7 +67,7 @@ public class BloodView : MonoBehaviour
     public void reduceBlood(float damage)
     {
         hp = hp - damage;
-        Game.getInstance().damageController.createDamageText(roleController.getRoleTransform(), damage);
+        Game.GetInstance().damageController.createDamageText(roleController.getRoleTransform(), damage);
     }
 
     public void restoreBlood(float hp)

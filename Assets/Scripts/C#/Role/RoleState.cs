@@ -11,10 +11,10 @@ public class RoleState
     Direction faceDirection;
     public int level;
 
-    public void init(int level, RoleConfigData roleConfigData)
+    public void Init(int level, RoleConfigData roleConfigData)
     {
         this.level = level;
-        Debug.Log("RoleState init.");
+        Debug.Log("RoleState Init.");
         speed = 5;
         hp = 100;
         hpLimit = roleConfigData.getRoleConfigItemByLevel(level).hp;

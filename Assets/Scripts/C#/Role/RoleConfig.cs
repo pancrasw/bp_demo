@@ -7,7 +7,7 @@ public class RoleConfigData
     RoleConfigItem[] data;
     public void load()
     {
-        data = Game.getInstance().configManager.getConfigDataAry<RoleConfigItem>("Player.level");
+        data = Game.GetInstance().configManager.GetConfigDataAry<RoleConfigItem>("Player.level");
     }
 
     public RoleConfigItem getRoleConfigItemByLevel(int level)

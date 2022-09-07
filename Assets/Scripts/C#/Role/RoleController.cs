@@ -14,17 +14,17 @@ public class RoleController
     RoleConfigData roleConfigData;
     public Vector3 characterPosition { get { return roleView.gameObject.transform.position; } }
 
-    public void init()
+    public void Init()
     {
-        Debug.Log("RoleController init.");
+        Debug.Log("RoleController Init.");
         roleState = new RoleState();
         roleView = GameObject.Find("Player").GetComponent<RoleView>();
-        roleView.init(this);
+        roleView.Init(this);
         roleConfigData = new RoleConfigData();
         roleConfigData.load();
-        roleState.init(1, roleConfigData);//for test
+        roleState.Init(1, roleConfigData);//for test
         bloodView = GameObject.Find("BloodBar").GetComponent<BloodView>();
-        bloodView.init(this);
+        bloodView.Init(this);
     }
 
     //duration持续时间，以s为单位

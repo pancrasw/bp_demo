@@ -11,7 +11,7 @@ public class MessageController
         Title,
     }
     Dictionary<Scene, GameObject> prefabs;
-    public void init()
+    public void Init()
     {
         prefabs = new Dictionary<Scene, GameObject>();
         prefabs.Add(Scene.Title, Resources.Load<GameObject>("/Prefabs/PopupTitle"));

@@ -6,7 +6,7 @@ public class CameraController : MonoBehaviour
 {
     RoleController roleController;
 
-    public void init(RoleController followRoleController)
+    public void Init(RoleController followRoleController)
     {
         roleController = followRoleController;
     }

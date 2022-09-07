@@ -7,7 +7,7 @@ public class DamageController
 {
     GameObject damageTextPrefab;
 
-    public void init()
+    public void Init()
     {
         damageTextPrefab = Resources.Load<GameObject>("Prefabs/DamageText");
     }
@@ -28,4 +28,5 @@ public class DamageController
         Game.delayCall(() => { GameObject.Destroy(damageText); }, 0.51f);
     }
 
+    
 }
