@@ -79,6 +79,7 @@ public class Game
         Debug.Log("game init!");
         initManager();
         initController();
+        main();
     }
 
     private void initManager()
