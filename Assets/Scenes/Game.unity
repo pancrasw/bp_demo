@@ -891,6 +891,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyPrefab: {fileID: 3112945022000772053, guid: 1a3d4d87c4ef1bd4991c4f2977866355,
     type: 3}
+  BombPrefab: {fileID: 7068864735496159656, guid: 080b06386d4d5fd46b3fa8c7e4cbe666,
+    type: 3}
 --- !u!224 &1351189297
 RectTransform:
   m_ObjectHideFlags: 0

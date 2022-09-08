@@ -47,7 +47,6 @@ public class BoardController
         {
             for (int y = 0; y < length; y++)
             {
-                Random random = new Random();
                 int type = Random.Range(0, Game.BLOCK_TYPE_COUNT);
                 grid[x, y] = (BlockType)type;
             }
