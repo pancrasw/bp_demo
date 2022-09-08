@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Path
 {
+    // 配置相对路径
     //public const string PROJECT_PREFIX = "C:/Users/LEGION/Documents/GitHub/bp_demo/";
     public static string PROJECT_PREFIX = System.Environment.CurrentDirectory;
 
