@@ -67,10 +67,10 @@ public class BoardController
             case BlockType.Normal:
                 break;
             case BlockType.Bleed:
-                roleController.bleed(0.5f, 10);//for test假数据
+                roleController.Bleed(0.5f, 10);//for test假数据
                 break;
             case BlockType.Mine:
-                roleController.reduceBlood(Random.Range(0, 10) * 3);
+                roleController.ReduceBlood(Random.Range(0, 10) * 3);
                 break;
             case BlockType.Chest:
                 roleController.restoreBlood(20);//for test写死
@@ -78,7 +78,7 @@ public class BoardController
             case BlockType.Key:
                 GameObject keyGO = GameObject.Instantiate(boardView.keyPrefab);
                 keyGO.transform.position = new Vector3(blockView.transform.position.x, blockView.transform.position.y, keyGO.transform.position.z);
-                keyGO.GetComponent<Follower>().Init(roleController.getRoleTransform());
+                keyGO.GetComponent<Follower>().Init(roleController.GetRoleTransform());
                 break;
         }
     }

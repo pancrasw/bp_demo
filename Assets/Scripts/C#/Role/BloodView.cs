@@ -12,7 +12,7 @@ public class BloodView : MonoBehaviour
         get { return roleController.roleState.hp; }
         set
         {
-            if (value > 0 && value <= roleController.getHpLimit())
+            if (value > 0 && value <= roleController.GetHpLimit())
             {
                 hpText.text = value.ToString();
                 roleController.roleState.hp = value;
@@ -21,7 +21,7 @@ public class BloodView : MonoBehaviour
             else if (value <= 0)
             {
                 roleController.roleState.hp = 0;
-                roleController.onDead();
+                roleController.OnDead();
             }
             else
                 hp = hpLimit;
@@ -48,11 +48,11 @@ public class BloodView : MonoBehaviour
     }
 
     //流血，参数为每秒掉血量
-    public void bleed(float hpPerSecond, int duration)
+    public void Bleed(float hpPerSecond, int duration)
     {
         Game.GetInstance().timerController.addSecondTimer(duration, () =>
         {
-            reduceBlood(hpPerSecond);
+            ReduceBlood(hpPerSecond);
             if (stopBleed)
             {
                 bleedTimerCount--;
@@ -64,10 +64,10 @@ public class BloodView : MonoBehaviour
         });
     }
 
-    public void reduceBlood(float damage)
+    public void ReduceBlood(float damage)
     {
         hp = hp - damage;
-        Game.GetInstance().damageController.createDamageText(roleController.getRoleTransform(), damage);
+        roleController.damageView.createDamageText(roleController.GetRoleTransform(), damage);
     }
 
     public void restoreBlood(float hp)

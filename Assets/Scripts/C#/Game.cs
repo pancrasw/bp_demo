@@ -51,7 +51,6 @@ public class Game
     public CameraController cameraController;
     public BoardController boardController;
     public RoleController mainCharacterController;
-    public DamageController damageController;
     public TimerController timerController;
 
     public static Game GetInstance()
@@ -71,7 +70,6 @@ public class Game
 
         boardController = new BoardController();
         mainCharacterController = new RoleController();
-        damageController = new DamageController();
     }
 
     public void Init()
@@ -95,7 +93,6 @@ public class Game
         boardController.Init();
         cameraController = GameObject.Find("MainCamera").GetComponent<CameraController>();
         cameraController.Init(mainCharacterController);
-        damageController.Init();
         timerController = GameObject.Find("Game").GetComponent<TimerController>();
         timerController.Init();
     }

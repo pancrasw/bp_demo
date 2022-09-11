@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class DamageController
+public class DamageView
 {
     GameObject damageTextPrefab;
 
