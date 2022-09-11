@@ -8,7 +8,7 @@ public class BoardController
     int cur_episode = -1;//当前关卡序号
     BoardConfigData boardConfigData;
     public int width { get { return cur_board.width; } }
-    public int length { get { return cur_board.length; } }
+    public int height { get { return cur_board.length; } }
 
     public BlockType[,] grid;//数据
     BoardView boardView;//地块视图
@@ -37,15 +37,15 @@ public class BoardController
             boardView.Init(this);
         }
         randomizeAllBlock();
-        boardView.updateAllBlock(true);
+        boardView.refreshBoard();
     }
 
     private void randomizeAllBlock()
     {
-        grid = new BlockType[width, length];
+        grid = new BlockType[width, height];
         for (int x = 0; x < width; x++)
         {
-            for (int y = 0; y < length; y++)
+            for (int y = 0; y < height; y++)
             {
                 int type = Random.Range(0, Game.BLOCK_TYPE_COUNT);
                 grid[x, y] = (BlockType)type;

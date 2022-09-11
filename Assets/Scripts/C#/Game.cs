@@ -35,7 +35,7 @@ public class Game
 
 
     public static readonly float ANGLE_FACTOR = Mathf.Sin(ANGLE * Mathf.PI / 180);//计算后的俯视变形因子
-    public static readonly float BLOCK_LENGTH = BLOCK_SIZE * ANGLE_FACTOR;
+    public static readonly float BLOCK_HEIGHT = BLOCK_SIZE * ANGLE_FACTOR;
     public static readonly float BLOCK_WIDTH = BLOCK_SIZE;
 
     public event callback GameStart;
