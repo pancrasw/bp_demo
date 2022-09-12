@@ -69,7 +69,11 @@ public class RoleController
     //玩家死亡
     public void OnDead()
     {
-        
+        //人物翻倒
+        roleView.transform.rotation = Quaternion.Euler(0, 0, 90);
+        roleView.Locked = true;
+        bloodView.stopBleed = true;
+        Game.GetInstance().messageController.popupMessage("Game Over", MessageController.Type.Title, false);
     }
 
     //存存档

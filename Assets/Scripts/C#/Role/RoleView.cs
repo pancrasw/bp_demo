@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 //控制角色相关的表现
 public class RoleView : MonoBehaviour
@@ -10,6 +11,17 @@ public class RoleView : MonoBehaviour
     float speed { get { return roleController.roleState.speed; } }
     float hp { get { return roleController.roleState.hp; } }
     BloodView bloodView;
+    public bool freeze;//禁止移动
+    bool _locked;
+    public bool Locked
+    {
+        get { return _locked; }
+        set
+        {
+            freeze = value;
+            _locked = value;
+        }
+    }//禁止操作
 
     public void Init(RoleController roleController)
     {
@@ -26,7 +38,11 @@ public class RoleView : MonoBehaviour
         else//斜方向移动，位移乘根号2，保证移动速度不变
             position += (moveX * speed * Time.deltaTime * transform.right * Mathf.Sqrt(2) / 2 + moveY * speed * Time.deltaTime * transform.up * Mathf.Sqrt(2) / 2);
         transform.position = position;
+    }
 
+    public void Knockback(Vector3 force)
+    {
+        transform.DOMove(transform.position + force, 0.3f);
     }
 
     //获取当前脚底下的Block
@@ -45,7 +61,10 @@ public class RoleView : MonoBehaviour
 
     void Update()
     {
-        onMove();
+        if (!freeze)
+        {
+            onMove();
+        }
         BlockView curBlock = getCurBlock();
         if (curBlock != null)
         {
@@ -56,7 +75,7 @@ public class RoleView : MonoBehaviour
                 curBlock.setSelected(true);
                 lastBlockView = curBlock;
             }
-            if (Input.GetKey(KeyCode.Space))//空格挖地
+            if (!_locked && Input.GetKey(KeyCode.Space))//空格挖地
             {
                 curBlock.onUse();
             }

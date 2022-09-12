@@ -52,6 +52,7 @@ public class Game
     public BoardController boardController;
     public RoleController mainCharacterController;
     public TimerController timerController;
+    public MessageController messageController;
 
     public static Game GetInstance()
     {
@@ -70,6 +71,7 @@ public class Game
 
         boardController = new BoardController();
         mainCharacterController = new RoleController();
+        messageController = new MessageController();
     }
 
     public void Init()
@@ -95,6 +97,7 @@ public class Game
         cameraController.Init(mainCharacterController);
         timerController = GameObject.Find("Game").GetComponent<TimerController>();
         timerController.Init();
+        messageController.Init();
     }
 
     public static void delayCall(callback callback, float duration)

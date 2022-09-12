@@ -14,13 +14,11 @@ public class BloodView : MonoBehaviour
         {
             if (value > 0 && value <= roleController.GetHpLimit())
             {
-                hpText.text = value.ToString();
-                roleController.roleState.hp = value;
-                hpImage.transform.localScale = new Vector3(hp / hpLimit, 1, 1);
+                SetHP(value);
             }
             else if (value <= 0)
             {
-                roleController.roleState.hp = 0;
+                SetHP(0);
                 roleController.OnDead();
             }
             else
@@ -44,7 +42,7 @@ public class BloodView : MonoBehaviour
         Debug.Log("BloodView Init.");
         this.roleController = roleController;
         Game.GetInstance().Pause += () => { onPause(true); };
-        hp = hp;//刷新血量文本
+        SetHP(hp);
     }
 
     //流血，参数为每秒掉血量
@@ -73,6 +71,14 @@ public class BloodView : MonoBehaviour
     public void restoreBlood(float hp)
     {
         this.hp += hp;
+    }
+
+    //设置文本和血条
+    private void SetHP(float hp)
+    {
+        hpText.text = hp.ToString();
+        roleController.roleState.hp = hp;
+        hpImage.transform.localScale = new Vector3(hp / hpLimit, 1, 1);
     }
 
     //暂定

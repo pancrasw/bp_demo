@@ -4,29 +4,33 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class MessageController
+public class MessageController : MonoBehaviour
 {
-    public enum Scene
+    public enum Type
     {
         Title,
     }
-    Dictionary<Scene, GameObject> prefabs;
+    Dictionary<Type, GameObject> prefabs;
     public void Init()
     {
-        prefabs = new Dictionary<Scene, GameObject>();
-        prefabs.Add(Scene.Title, Resources.Load<GameObject>("/Prefabs/PopupTitle"));
+        Debug.Log("MessageController Init");
+        prefabs = new Dictionary<Type, GameObject>();
+        prefabs.Add(Type.Title, GameObject.Find("PopupTitle"));
+        prefabs[Type.Title].SetActive(false);
     }
 
-    public void popupMessage(string text, Scene scene, bool destroyAfter = true, float destroyDelay = 0.5f)
+    public void popupMessage(string text, Type type, bool destroyAfter = true, float destroyDelay = 0.5f)
     {
-        switch (scene)
+        switch (type)
         {
-            case Scene.Title:
-                GameObject title = GameObject.Instantiate(prefabs[Scene.Title]);
+            case Type.Title:
+                GameObject titleGO = prefabs[Type.Title];
+                titleGO.SetActive(true);
+                titleGO.transform.localPosition = new Vector3(0, 0, 0);
                 if (destroyAfter)
                 {
                     //title.GetComponent<Text>().color.
-                    Game.delayCall(() => { GameObject.Destroy(title); }, destroyDelay);
+                    Game.delayCall(() => { prefabs[Type.Title].SetActive(false); }, destroyDelay);
                 }
                 break;
         }

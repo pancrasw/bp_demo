@@ -67,10 +67,10 @@ public class BoardController
             case BlockType.Normal:
                 break;
             case BlockType.Bleed:
-                roleController.Bleed(0.5f, 10);//for test假数据
+                roleController.Bleed(1f, 10);//for test假数据
                 break;
             case BlockType.Mine:
-                roleController.ReduceBlood(Random.Range(0, 10) * 3);
+                roleController.ReduceBlood(Random.Range(0, 10) * 5);
                 break;
             case BlockType.Chest:
                 roleController.restoreBlood(20);//for test写死
