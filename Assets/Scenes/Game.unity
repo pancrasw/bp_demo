@@ -864,7 +864,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1345150517}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.279628, y: -1.2204268, z: 0}
+  m_LocalPosition: {x: -1.279628, y: -1.01, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -882,6 +882,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36232c338758dfe4286004c9bcb580b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bloodView: {fileID: 0}
   freeze: 0
 --- !u!61 &1345150521
 BoxCollider2D:
@@ -966,6 +967,8 @@ MonoBehaviour:
   bombPrefab: {fileID: 7068864735496159656, guid: 080b06386d4d5fd46b3fa8c7e4cbe666,
     type: 3}
   airWallPrefab: {fileID: 4074987146538747460, guid: 7e889675bdebc5c4ba4a800e6b658250,
+    type: 3}
+  zombiePrefab: {fileID: 9152886524600304903, guid: 1f51c243b14489d41b428b483c4610ac,
     type: 3}
 --- !u!224 &1351189297
 RectTransform:
