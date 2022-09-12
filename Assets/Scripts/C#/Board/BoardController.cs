@@ -80,6 +80,11 @@ public class BoardController
                 keyGO.transform.position = new Vector3(blockView.transform.position.x, blockView.transform.position.y, keyGO.transform.position.z);
                 keyGO.GetComponent<Follower>().Init(roleController.GetRoleTransform());
                 break;
+            case BlockType.Zombie:
+                GameObject zombieGO = GameObject.Instantiate(boardView.zombiePrefab);
+                zombieGO.transform.position = new Vector3(blockView.transform.position.x, blockView.transform.position.y - Game.BLOCK_HEIGHT, zombieGO.transform.position.z);
+                
+                break;
         }
     }
 }

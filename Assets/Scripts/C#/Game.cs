@@ -10,6 +10,7 @@ public enum BlockType
     Chest,//宝箱
     Key,//钥匙
     Bomb,//炸弹
+    Zombie,//僵尸
     Last,//空，用于计数
 }
 

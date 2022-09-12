@@ -10,7 +10,7 @@ public class RoleView : MonoBehaviour
     RoleController roleController;
     float speed { get { return roleController.roleState.speed; } }
     float hp { get { return roleController.roleState.hp; } }
-    BloodView bloodView;
+    public BloodView bloodView;
     public bool freeze;//禁止移动
     bool _locked;
     public bool Locked
@@ -40,9 +40,11 @@ public class RoleView : MonoBehaviour
         transform.position = position;
     }
 
-    public void Knockback(Vector3 force)
+    public void Knockback(Vector3 force, float duration = 0.3f)
     {
-        transform.DOMove(transform.position + force, 0.3f);
+        freeze = true;
+        transform.DOMove(transform.position + force, duration);
+        Game.delayCall(() => { freeze = false; }, duration);
     }
 
     //获取当前脚底下的Block
