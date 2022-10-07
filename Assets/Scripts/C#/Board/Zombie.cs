@@ -24,7 +24,7 @@ public class Zombie : MonoBehaviour
         {
             Vector3 force = (mainCharactorView.transform.position - transform.position).normalized * forceScale;
             mainCharactorView.Knockback(force);
-            mainCharactorView.bloodView.restoreBlood(damage);
+            mainCharactorView.bloodView.RestoreBlood(damage);
         }
     }
 

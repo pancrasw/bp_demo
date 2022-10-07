@@ -15,7 +15,7 @@ public class RoleState
     {
         this.level = level;
         Debug.Log("RoleState Init.");
-        speed = 5;
+        speed = roleConfigData.getRoleConfigItemByLevel(level).speed;
         hp = 100;
         hpLimit = roleConfigData.getRoleConfigItemByLevel(level).hp;
     }

@@ -35,6 +35,13 @@ public class Utility
             //Todo
         }
     }
+
+    public static void swap<T>(T a, T b)
+    {
+        T temp = b;
+        b = a;
+        a = temp;
+    }
 }
 
 //最小堆
@@ -72,6 +79,20 @@ public class PriorityHeap<T>
             return default(T);
         else
             return data[0];
+    }
+
+    public void remove(T t)
+    {
+        for (int i = 0; i < data.Count; i++)
+        {
+            if (data[i].Equals(t))
+            {
+                data[i] = data[data.Count - 1];
+                data.RemoveAt(data.Count - 1);
+                siftDown(i);
+                return;
+            }
+        }
     }
 
     private void siftUp(int index)

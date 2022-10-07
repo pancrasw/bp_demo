@@ -7,11 +7,12 @@ using DG.Tweening;
 //控制角色相关的表现
 public class RoleView : MonoBehaviour
 {
-    RoleController roleController;
-    float speed { get { return roleController.roleState.speed; } }
+    public RoleController roleController;
+    float speed { get { return roleController.speed; } }
     float hp { get { return roleController.roleState.hp; } }
     public BloodView bloodView;
     public bool freeze;//禁止移动
+    public BlockView curBlock;
     bool _locked;
     public bool Locked
     {
@@ -67,15 +68,16 @@ public class RoleView : MonoBehaviour
         {
             onMove();
         }
-        BlockView curBlock = getCurBlock();
+        curBlock = getCurBlock();
         if (curBlock != null)
         {
-            if (curBlock != lastBlockView)
+            if (curBlock != lastBlockView)//踩到了新的方块
             {
                 if (lastBlockView != null)
                     lastBlockView.setSelected(false);
                 curBlock.setSelected(true);
                 lastBlockView = curBlock;
+                roleController.onCoordinateChange();
             }
             if (!_locked && Input.GetKey(KeyCode.Space))//空格挖地
             {

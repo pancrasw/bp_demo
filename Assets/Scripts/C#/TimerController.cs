@@ -26,10 +26,16 @@ public class TimerController : MonoBehaviour
         secondTimers.Add(new SecondTimer(times, callbackPerSecond));
         secondTimersCompeletCallback.Add(completeCallback);
     }
-    public void addTimer(float durationMS, CompleteCallback completeCallback)
+    public Timer addTimer(float durationMS, CompleteCallback completeCallback)
     {
-        timerHeap.Add(new Timer(durationMS, completeCallback));
+        Timer newTimer = new Timer(durationMS, completeCallback);
+        timerHeap.Add(newTimer);
         Debug.Log(timerHeap.Count);
+        return newTimer;
+    }
+    public void removeTimer(Timer timer)
+    {
+        timerHeap.remove(timer);
     }
     // Start is called before the first frame update
     void Start()

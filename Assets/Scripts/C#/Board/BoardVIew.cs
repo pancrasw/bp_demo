@@ -11,13 +11,15 @@ public class BoardView : MonoBehaviour
     int width { get { return boardController.width; } }
     //地块垂直方向上的个数
     int height { get { return boardController.height; } }
-    GameObject[,] blockGOs;
+    public GameObject[,] blockGOs;
     GameObject[] airWallGOs;
     public GameObject blockPrefab;
     public GameObject keyPrefab;
     public GameObject bombPrefab;
     public GameObject airWallPrefab;
     public GameObject zombiePrefab;
+    public GameObject fireflyPrefab;
+    public GameObject sheildPrefab;
     public void Init(BoardController boardController)
     {
         this.boardController = boardController;
@@ -65,12 +67,6 @@ public class BoardView : MonoBehaviour
         }
     }
 
-    //地块整数坐标换算实际位置
-    public Vector3 GetPosition(Vector2Int coordinate)
-    {
-        return new Vector3(coordinate.x * Game.BLOCK_WIDTH, -coordinate.y * Game.BLOCK_HEIGHT, 10);
-    }
-
     public void ClearAllBlock()
     {
         if (blockGOs == null) return;
@@ -113,13 +109,6 @@ public class BoardView : MonoBehaviour
             Destroy(airWallGOs[i]);
         }
         airWallGOs = null;
-    }
-
-    //
-    public void onUse(BlockView blockView)
-    {
-        BlockType type = boardController.getBlock(blockView.coordinate.x, blockView.coordinate.y);
-
     }
 
     private Vector3 GetAirWallPosition(Vector2 coordinate)

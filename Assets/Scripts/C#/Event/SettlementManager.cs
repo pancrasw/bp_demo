@@ -13,16 +13,4 @@ public class SettlementManager : MonoBehaviour
         roleController = Game.GetInstance().mainCharacterController;
     }
 
-    //地块结算
-    public void settle(BlockType blockType)
-    {
-        switch (blockType)
-        {
-            case BlockType.Normal:
-                break;
-            case BlockType.Bleed:
-                //for test假数据
-                break;
-        }
-    }
 }

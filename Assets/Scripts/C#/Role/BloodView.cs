@@ -35,6 +35,7 @@ public class BloodView : MonoBehaviour
     public Text hpText;
     public Text hpLimitTex;
     public bool stopBleed;//停止流血开关
+    public bool isSheilding;//是否处在护盾无敌状态
     int bleedTimerCount;
 
     public void Init(RoleController roleController)
@@ -64,13 +65,16 @@ public class BloodView : MonoBehaviour
 
     public void ReduceBlood(float damage)
     {
+        roleController.damageView.CreateDamageText(roleController.GetRoleTransform(), damage);
+        if (isSheilding)//无敌状态不掉血
+            return;
         hp = hp - damage;
-        roleController.damageView.createDamageText(roleController.GetRoleTransform(), damage);
     }
 
-    public void restoreBlood(float hp)
+    public void RestoreBlood(float hp)
     {
         this.hp += hp;
+        roleController.damageView.CreateHealText(roleController.GetRoleTransform(), hp);
     }
 
     //设置文本和血条

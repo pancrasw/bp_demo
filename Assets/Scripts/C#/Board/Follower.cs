@@ -8,18 +8,33 @@ public class Follower : MonoBehaviour
     Transform masterTransform;
     public float distance;
     public float speed;
-    public void Init(Transform masterTransform)
+    private bool isPlaying = false;
+    public Follower Init(Transform masterTransform)
     {
         this.masterTransform = masterTransform;
+        return this;
+    }
+
+    public void Play()
+    {
+        isPlaying = true;
+    }
+
+    public void Stop()
+    {
+        isPlaying = false;
     }
 
     void Update()
     {
-        Vector3 curDistance = masterTransform.position - transform.position;
-        if (curDistance.magnitude >= distance)
+        if (isPlaying)
         {
-            Vector3 direction = curDistance.normalized;
-            transform.position += direction * speed * Time.deltaTime;
+            Vector3 curDistance = masterTransform.position - transform.position;
+            if (curDistance.magnitude >= distance)
+            {
+                Vector3 direction = curDistance.normalized;
+                transform.position += direction * speed * Time.deltaTime;
+            }
         }
     }
 }

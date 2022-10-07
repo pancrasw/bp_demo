@@ -6,14 +6,17 @@ using UnityEngine;
 public class RoleController
 {
     public RoleState roleState;
-    public float speed { get { return roleState.speed; } set { roleState.speed = value; } }
+    public float speed { get { return roleState.speed * totalFactor; } }
     Vector3 _forwardDirection;
     Vector3 forwardDirection { set { _forwardDirection = value; } get { return _forwardDirection; } }
-    RoleView roleView;
-    BloodView bloodView;
+    public RoleView roleView;
+    public BloodView bloodView;
     public DamageView damageView;
     RoleConfigData roleConfigData;
     public Vector3 characterPosition { get { return roleView.gameObject.transform.position; } }
+    public Vector2Int characterCoordinate { get { return roleView.curBlock.coordinate; } }
+    public callback coordinateChange;
+    public bool isSheilding { get { return bloodView.isSheilding; } set { bloodView.isSheilding = value; } }
 
     public void Init()
     {
@@ -41,9 +44,41 @@ public class RoleController
         bloodView.ReduceBlood(damage);
     }
 
-    public void restoreBlood(float hp)
+    public void RestoreBlood(float hp)
     {
+        bloodView.RestoreBlood(hp);
+    }
 
+    public void RestoreSpeed()
+    {
+        speedFactorList.Clear();
+    }
+
+    List<float> speedFactorList;//加速减速buff列表
+    float totalFactor = 1;
+
+    //返回注册的系数id
+    public int registerSpeedFactor(float factor)
+    {
+        if (factor < 0) return -1;
+        if (speedFactorList == null)
+            speedFactorList = new List<float>();
+        speedFactorList.Add(factor);
+        totalFactor *= factor;
+        return speedFactorList.Count - 1;
+    }
+
+    public void changeSpeedFactor(int id, float factor)
+    {
+        if (factor < 0 || id < 0 || id >= speedFactorList.Count) return;
+        totalFactor *= factor /= speedFactorList[id];
+        speedFactorList[id] = factor;
+    }
+
+    public void removeSpeedFactor(int id)
+    {
+        totalFactor /= speedFactorList[id];
+        speedFactorList.RemoveAt(id);
     }
 
     public int GetHpLimit()
@@ -80,5 +115,11 @@ public class RoleController
     public void Save(int id)
     {
         roleState.save(id);
+    }
+
+    public void onCoordinateChange()
+    {
+        if (coordinateChange != null)
+            coordinateChange();
     }
 }

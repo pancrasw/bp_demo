@@ -12,7 +12,7 @@ public class BlockView : MonoBehaviour
         get { return _coordinate; }
         set
         {
-            transform.localPosition = boardView.GetPosition(value);
+            transform.localPosition = new Vector3(value.x * Game.BLOCK_WIDTH, -value.y * Game.BLOCK_HEIGHT, 10);
             _coordinate = value;
         }
     }
