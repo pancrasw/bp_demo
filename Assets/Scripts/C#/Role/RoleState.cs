@@ -8,7 +8,6 @@ public class RoleState
     public float speed;
     public float hp;
     public float hpLimit;
-    Direction faceDirection;
     public int level;
 
     public void Init(int level, RoleConfigData roleConfigData)

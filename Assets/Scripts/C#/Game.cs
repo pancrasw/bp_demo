@@ -28,10 +28,6 @@ public enum Layer
     Role = 0,
 }
 
-public enum Direction
-{
-    UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT
-}
 
 public delegate void saveFunc(int id);
 

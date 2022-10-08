@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5325904814797260469}
   - component: {fileID: 3092169184893847390}
   - component: {fileID: 1818247888922420846}
+  - component: {fileID: 2237288940508560963}
   m_Layer: 0
   m_Name: Firefly
   m_TagString: Untagged
@@ -110,3 +111,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkDistance: 1
   stayTime: 10
+--- !u!114 &2237288940508560963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2374969056921836786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff4df42f20ed5e14f91d1f019c2f0b64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selfJudgeDirection: 1
+  walkPeriod: 0.5
+  frames: []
