@@ -17,9 +17,10 @@ public class BoardView : MonoBehaviour
     public GameObject keyPrefab;
     public GameObject bombPrefab;
     public GameObject airWallPrefab;
-    public GameObject zombiePrefab;
+    //public GameObject zombiePrefab;
     public GameObject fireflyPrefab;
     public GameObject sheildPrefab;
+    public GameObject batPrefab;
     public void Init(BoardController boardController)
     {
         this.boardController = boardController;

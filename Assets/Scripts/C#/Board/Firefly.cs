@@ -9,7 +9,21 @@ public class Firefly : MonoBehaviour
     public int stayTime;//存在时间
     Surrounder surrounder;
     callback blockChangeCallback;
-    bool glow;//是否发光
+    bool glow
+    {
+        set
+        {
+            if (value)
+            {
+                GetComponent<SpriteRenderer>().color = Color.yellow;
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().color = Color.white;
+            }
+            Debug.Log(value);
+        }
+    }//是否发光
     public void Init(BlockView startBlock)
     {
         //调整初始位置
@@ -21,10 +35,12 @@ public class Firefly : MonoBehaviour
 
         RoleController mainCharacterController = Game.GetInstance().mainCharacterController;
 
+        //判断是否发光函数
         BoardController.JudegeFunction judegeFunction = (coordinate) =>
         {
             BlockType blockType = Game.GetInstance().boardController.getBlock(coordinate.x, coordinate.y);
-            if (Game.GetInstance().blockBiasMap.ContainsKey(blockType) && Game.GetInstance().blockBiasMap[blockType] == BlockBias.Benifit)//如果是好方块
+            if (Game.GetInstance().blockBiasMap.ContainsKey(blockType) && Game.GetInstance().blockBiasMap[blockType] == BlockBias.Benifit//如果是好方块
+            && !Game.GetInstance().boardController.GetBlockView(coordinate).used)//且尚未被挖取
                 return true;
             return false;
         };

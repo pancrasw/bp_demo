@@ -95,7 +95,6 @@ public class RoleImageController : MonoBehaviour
             //GetComponent<SpriteRenderer>().sprite = frames[frameIndex];
 
             oldFrameIndex = frameIndex;
-            Debug.Log(direction);
         }
         else if (roleMotionState == RoleMotionState.Walk)
         {
@@ -107,7 +106,6 @@ public class RoleImageController : MonoBehaviour
 
             roleMotionState = RoleMotionState.Idle;
             oldFrameIndex = frameIndex;
-            Debug.Log(direction);
         }
     }
 }

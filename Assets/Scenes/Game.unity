@@ -880,6 +880,7 @@ GameObject:
   - component: {fileID: 1345150518}
   - component: {fileID: 1345150522}
   - component: {fileID: 1345150521}
+  - component: {fileID: 1345150523}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1011,6 +1012,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &1345150523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345150517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff4df42f20ed5e14f91d1f019c2f0b64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selfJudgeDirection: 0
+  walkPeriod: 0.5
+  frames: []
 --- !u!1 &1351189294
 GameObject:
   m_ObjectHideFlags: 0
@@ -1048,11 +1064,11 @@ MonoBehaviour:
     type: 3}
   airWallPrefab: {fileID: 4074987146538747460, guid: 7e889675bdebc5c4ba4a800e6b658250,
     type: 3}
-  zombiePrefab: {fileID: 9152886524600304903, guid: 1f51c243b14489d41b428b483c4610ac,
-    type: 3}
   fireflyPrefab: {fileID: 2374969056921836786, guid: 92c5aa24a3d52b54dad4e04f114aabb6,
     type: 3}
   sheildPrefab: {fileID: 3073909540066751335, guid: 1a51647fc58820140906d8afd990fce4,
+    type: 3}
+  batPrefab: {fileID: 8098653031183229640, guid: f515b674e606ab14bb611d1b1b202eb7,
     type: 3}
 --- !u!224 &1351189297
 RectTransform:

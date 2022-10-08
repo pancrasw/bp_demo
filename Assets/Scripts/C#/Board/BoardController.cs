@@ -94,6 +94,10 @@ public class BoardController
                 sheildGO.GetComponent<Sheild>().Init(roleController.GetRoleTransform());
                 Game.GetInstance().messageController.popupBuffMesage("护盾", Color.blue);
                 break;
+            case BlockType.Bat:
+                GameObject batGO = GameObject.Instantiate(boardView.batPrefab);
+                batGO.GetComponent<Bat>().Init(blockView, roleController.GetRoleTransform());
+                break;
         }
     }
 
@@ -170,5 +174,12 @@ public class BoardController
         return Vector3.zero;
     }
 
-
+    public BlockView GetBlockView(Vector2Int coordinate)
+    {
+        if (isValidCoordinate(coordinate))
+        {
+            return boardView.blockGOs[coordinate.y, coordinate.x].GetComponent<BlockView>();
+        }
+        return null;
+    }
 }

@@ -12,6 +12,7 @@ public enum BlockType
     //Zombie,//僵尸
     Firefly,//萤火虫
     Sheild,//护盾
+    Bat,
     Last,//空，用于计数
 }
 
@@ -92,6 +93,7 @@ public class Game
         // blockBiasMap.Add(BlockType.Zombie, BlockBias.Harmful);
         blockBiasMap.Add(BlockType.Firefly, BlockBias.Benifit);
         blockBiasMap.Add(BlockType.Sheild, BlockBias.Benifit);
+        blockBiasMap.Add(BlockType.Bat, BlockBias.Harmful);
     }
 
     public void Init()

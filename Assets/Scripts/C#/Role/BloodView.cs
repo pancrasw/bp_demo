@@ -65,9 +65,12 @@ public class BloodView : MonoBehaviour
 
     public void ReduceBlood(float damage)
     {
-        roleController.damageView.CreateDamageText(roleController.GetRoleTransform(), damage);
         if (isSheilding)//无敌状态不掉血
+        {
+            roleController.damageView.CreateDamageText(roleController.GetRoleTransform(), 0);
             return;
+        }
+        roleController.damageView.CreateDamageText(roleController.GetRoleTransform(), damage);
         hp = hp - damage;
     }
 
