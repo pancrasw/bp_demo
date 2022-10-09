@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bramble : MonoBehaviour
+//荆棘
+public class Bramble : Creater
 {
     public float damage;
     public float attackCD;
@@ -11,6 +12,7 @@ public class Bramble : MonoBehaviour
     BlockView block;
     public void Init(BlockView block)
     {
+        Init();
         this.block = block;
         checkCharacterCoordinate();
 

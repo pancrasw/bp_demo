@@ -5,11 +5,11 @@ using UnityEngine;
 public enum BlockType
 {
     Normal,
-    //Mine,//地雷
+    Mine,//地雷
     Chest,//宝箱
     Key,//钥匙
-    //Bomb,//炸弹
-    //Zombie,//僵尸
+    Bomb,//炸弹
+    Zombie,//僵尸
     Firefly,//萤火虫
     Sheild,//护盾
     LanternFruit,//灯笼果
@@ -33,13 +33,13 @@ public enum Layer
 }
 
 
-public delegate void saveFunc(int id);
-
 public class Game
 {
+    public bool isPause;
+
     //游戏显示配置
     public const int BLOCK_TYPE_COUNT = (int)(BlockType.Last);//地块种类数量
-    public const float BLOCK_SIZE = 1;//地块尺寸
+    public const float BLOCK_SIZE = 0.9f;//地块尺寸
     public const float ANGLE = 90;//俯视角度，90度为垂直向下正投影
 
     public const float UI_LAYER = -1;
@@ -51,6 +51,8 @@ public class Game
 
     public event callback GameStart;
     public event callback Pause;
+    public event callback Continue;
+    public event callback Pass;//通关
 
     public static Game game;
 
@@ -66,7 +68,7 @@ public class Game
     public MessageController messageController;
 
     public Dictionary<BlockType, BlockBias> blockBiasMap;
-    public Dictionary<BlockType, string> translation;
+    public Dictionary<string, BlockType> translation;
 
     public static Game GetInstance()
     {
@@ -97,8 +99,16 @@ public class Game
         // blockBiasMap.Add(BlockType.Zombie, BlockBias.Harmful);
         blockBiasMap.Add(BlockType.Firefly, BlockBias.Benifit);
         blockBiasMap.Add(BlockType.Sheild, BlockBias.Benifit);
-
         blockBiasMap.Add(BlockType.Bat, BlockBias.Harmful);
+
+        translation = new Dictionary<string, BlockType>();
+        translation.Add("Normal", BlockType.Normal);
+        translation.Add("Bat", BlockType.Bat);
+        translation.Add("LanternFruit", BlockType.LanternFruit);
+        translation.Add("Bramble", BlockType.Bramble);
+        translation.Add("Firefly", BlockType.Firefly);
+        translation.Add("Key", BlockType.Key);
+        translation.Add("Sheild", BlockType.Sheild);
     }
 
     public void Init()
@@ -134,5 +144,25 @@ public class Game
 
     public void main()
     {
+    }
+
+    public void onPass()
+    {
+        if (Pass != null)
+            Pass();
+    }
+
+    public void OnPause()
+    {
+        isPause = true;
+        if (Pause != null)
+            Pause();
+    }
+
+    public void OnContinue()
+    {
+        isPause = false;
+        if (Continue != null)
+            Continue();
     }
 }

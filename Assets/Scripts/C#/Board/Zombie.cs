@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Zombie : MonoBehaviour
+public class Zombie : Creater
 {
     public float forceScale;//击退角色的力度大小
     public float damage;//给角色造成的伤害
     RoleView mainCharactorView;
     public void Init(RoleView mainCharactorView, float speed)
     {
+        Init();
         this.mainCharactorView = mainCharactorView;
         GetComponent<Follower>().speed = speed;
     }

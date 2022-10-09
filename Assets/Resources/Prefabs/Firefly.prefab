@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5325904814797260469}
   - component: {fileID: 3092169184893847390}
   - component: {fileID: 1818247888922420846}
-  - component: {fileID: 2237288940508560963}
+  - component: {fileID: 807219681956945277}
   m_Layer: 0
   m_Name: Firefly
   m_TagString: Untagged
@@ -96,7 +96,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roundSpeed: 100
   chaseSpeed: 0.2
-  distance: 0.2
+  distance: 0.5
+  freezeRotation: 1
 --- !u!114 &1818247888922420846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,7 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkDistance: 1
   stayTime: 10
---- !u!114 &2237288940508560963
+--- !u!114 &807219681956945277
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,9 +121,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 2374969056921836786}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff4df42f20ed5e14f91d1f019c2f0b64, type: 3}
+  m_Script: {fileID: 11500000, guid: 841052f14ae124e43bba54b07cf51e9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   selfJudgeDirection: 1
+  alwaysWalk: 1
   walkPeriod: 0.5
-  frames: []
+  frames:
+  - {fileID: 21300000, guid: f893ec8f3b2164546a62341d9051bbca, type: 3}
+  - {fileID: 21300000, guid: c608149204fd2db45a13ab79c4643b46, type: 3}
+  - {fileID: 21300000, guid: f893ec8f3b2164546a62341d9051bbca, type: 3}
+  - {fileID: 21300000, guid: 9c4539e06189a9548b13e0ab852e3119, type: 3}
+  - {fileID: 21300000, guid: 31fb661e73ac9a845a5408a5b7c95efd, type: 3}
+  - {fileID: 21300000, guid: 5ef327d2d4441ba429e9415d11cb906a, type: 3}
+  - {fileID: 21300000, guid: 31fb661e73ac9a845a5408a5b7c95efd, type: 3}
+  - {fileID: 21300000, guid: 7c2228eb03c65ca459bc1451ff349f6f, type: 3}
+  - {fileID: 21300000, guid: a3637e92ae8e5a44da45e4cf5b137204, type: 3}
+  - {fileID: 21300000, guid: 16cba196e32a30b41a5dc640eba955c9, type: 3}
+  - {fileID: 21300000, guid: a3637e92ae8e5a44da45e4cf5b137204, type: 3}
+  - {fileID: 21300000, guid: ba177a4b82d5aec4783c95e774e80dc4, type: 3}
+  - {fileID: 21300000, guid: a66b8a3637aa71a4fbfff261dffd367f, type: 3}
+  - {fileID: 21300000, guid: 66533c77724a0ce41ae44e2f2b382602, type: 3}
+  - {fileID: 21300000, guid: a66b8a3637aa71a4fbfff261dffd367f, type: 3}
+  - {fileID: 21300000, guid: 005cdcb877d9a514381d8ec5f36d4824, type: 3}

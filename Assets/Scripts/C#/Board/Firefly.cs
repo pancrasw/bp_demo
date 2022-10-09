@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //跟踪
-public class Firefly : MonoBehaviour
+public class Firefly : Creater
 {
     public int checkDistance;//距离格子数
     public int stayTime;//存在时间
+
     Surrounder surrounder;
     callback blockChangeCallback;
+
     bool glow
     {
         set
@@ -21,11 +23,13 @@ public class Firefly : MonoBehaviour
             {
                 GetComponent<SpriteRenderer>().color = Color.white;
             }
-            Debug.Log(value);
         }
     }//是否发光
+
     public void Init(BlockView startBlock)
     {
+        Init();
+
         //调整初始位置
         transform.position = new Vector3(startBlock.transform.position.x, startBlock.transform.position.y, Game.NORMAL_LAYER);
 
@@ -65,11 +69,6 @@ public class Firefly : MonoBehaviour
             mainCharacterController.coordinateChange -= blockChangeCallback;
             Destroy(gameObject);
         }, stayTime);
-    }
-
-    void Update()
-    {
-
     }
 }
 

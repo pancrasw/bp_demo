@@ -4,16 +4,18 @@ using UnityEngine;
 using DG.Tweening;
 
 //跟踪
-public class LanternFruit : MonoBehaviour
+public class LanternFruit : Creater
 {
     public float healPoint;
+    public float jumpForce;
+    public float animateDuration;
     public void Init(BlockView startBlock)
     {
+        Init();
         transform.position = Game.GetInstance().boardController.getBlockPosition(startBlock.coordinate);
         GetComponent<CircleCollider2D>().enabled = false;
 
-        float animateDuration = 0.5f;
-        transform.DOJump(transform.position, 5, 1, animateDuration);
+        transform.DOJump(transform.position, jumpForce, 1, animateDuration);
 
         Game.delayCall(() =>
         {
@@ -27,6 +29,7 @@ public class LanternFruit : MonoBehaviour
         {
             RoleView roleView = other.GetComponent<RoleView>();
             Game.GetInstance().mainCharacterController.RestoreBlood(healPoint);
+            Destroy(gameObject);
         }
     }
 }

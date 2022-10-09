@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bat : MonoBehaviour
+public class Bat : Creater
 {
     public float forceFactor;//击退的力度
     public float firstDamage;//初始伤害
@@ -14,6 +14,8 @@ public class Bat : MonoBehaviour
     Timer attackCDTimer;
     public void Init(BlockView startBlock, Transform roleTransform)
     {
+        Init();
+        
         transform.position = new Vector3(startBlock.transform.position.x, startBlock.transform.position.y, transform.position.z);
 
         follower = GetComponent<Follower>();

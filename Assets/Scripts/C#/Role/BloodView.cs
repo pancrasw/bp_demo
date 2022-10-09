@@ -51,6 +51,7 @@ public class BloodView : MonoBehaviour
     {
         Game.GetInstance().timerController.addSecondTimer(duration, () =>
         {
+            if (Game.GetInstance().isPause) return true;
             ReduceBlood(hpPerSecond);
             if (stopBleed)
             {

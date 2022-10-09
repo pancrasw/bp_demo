@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Marsh : MonoBehaviour
+public class Marsh : Creater
 {
     public GameObject childMarshPrefab;
     public int initialRange;//初始的方块范围，只有本格则为0格

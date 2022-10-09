@@ -23,7 +23,7 @@ public class BlockView : MonoBehaviour
     public void Init(BoardView boardView)
     {
         this.boardView = boardView;
-        transform.localScale = boardView.gameObject.transform.localScale;
+        transform.localScale = new Vector3(Game.BLOCK_WIDTH, Game.BLOCK_HEIGHT);
     }
 
     //是否被使用
@@ -49,7 +49,7 @@ public class BlockView : MonoBehaviour
         if (selected)
             spriteRenderer.color = new Color(0, 255, 255);//调为绿色
         else
-            spriteRenderer.color = new Color(255, 255, 255);//原色
+            spriteRenderer.color = new Color(255, 255, 255, 0);//原色
     }
 
     public void onUse()

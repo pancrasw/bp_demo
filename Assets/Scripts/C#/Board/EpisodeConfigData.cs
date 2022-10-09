@@ -11,6 +11,10 @@ public class EpisodeConfigData
     public void load(int level)
     {
         data = Game.GetInstance().configManager.GetConfigDataAry<EpisodeConfigItem>(config_file_name + level.ToString());
+        if (data == null)
+        {
+            Debug.Log(config_file_name + level.ToString() + ".json is nil");
+        }
     }
 
     //通过关卡id获取配置
@@ -18,7 +22,7 @@ public class EpisodeConfigData
     {
         foreach (EpisodeConfigItem episodeConfigItem in data)
         {
-            if (Game.GetInstance().translation[blockType] == episodeConfigItem.blockType)
+            if (episodeConfigItem.blockTypeEnum == blockType)
             {
                 return episodeConfigItem;
             }
@@ -28,6 +32,7 @@ public class EpisodeConfigData
 
     public float getTotalWeight()
     {
+        if (data == null) return -1;
         float totalWeight = 0;
         foreach (EpisodeConfigItem episodeConfigItem in data)
         {
@@ -43,4 +48,6 @@ public class EpisodeConfigItem
     public int configID;//配置ID
     public float weight;//权重
     public float stayTime;
+    public int fixedCount;//固定个数
+    public BlockType blockTypeEnum { get { return Game.GetInstance().translation[blockType]; } }
 }

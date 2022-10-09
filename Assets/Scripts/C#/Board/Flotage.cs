@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 
 //漂浮，上下简谐运动
-public class Flotage : MonoBehaviour
+public class Flotage : Creater
 {
     public AnimationCurve animationCurve;
     public bool isPlay;
@@ -16,8 +16,9 @@ public class Flotage : MonoBehaviour
     Vector3 startPosition;
     bool isTweening;
     float time;
-    public void Init()
+    public new void Init()
     {
+        base.Init();
         startPosition = transform.localPosition;
         direction = direction.normalized;
         Play();
@@ -47,6 +48,7 @@ public class Flotage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isPause) return;
         if (isPlay && !isTweening)
         {
             updatePosition(time += Time.deltaTime);

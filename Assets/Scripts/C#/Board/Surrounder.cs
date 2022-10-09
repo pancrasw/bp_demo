@@ -7,6 +7,7 @@ public class Surrounder : MonoBehaviour
     public float roundSpeed;//环绕速度
     public float chaseSpeed;//追逐速度
     public float distance;//距离
+    public bool freezeRotation;//是否冻结自身旋转
     bool isPlaying;//是否正在播放
     bool isChasing;
     bool isDepart;//正在远离
@@ -54,7 +55,7 @@ public class Surrounder : MonoBehaviour
             }
             else if (isDepart)
             {
-                Debug.Log("isDepart");
+            Debug.Log("isDepart");
                 if (Vector3.Magnitude(transform.localPosition) < distance)
                     transform.localPosition = transform.localPosition + Vector3.Normalize(transform.localPosition) * chaseSpeed;
                 else
@@ -64,7 +65,14 @@ public class Surrounder : MonoBehaviour
                 }
             }
             else
+            {
                 transform.RotateAround(transform.parent.transform.position, Vector3.forward, roundSpeed * Time.deltaTime);
+                if (freezeRotation)
+                {
+                    transform.rotation = new Quaternion(0, 0, 0, 0);
+                }
+            }
+
         }
     }
 }

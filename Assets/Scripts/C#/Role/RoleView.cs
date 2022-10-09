@@ -8,11 +8,13 @@ using DG.Tweening;
 public class RoleView : MonoBehaviour
 {
     public RoleController roleController;
-    float speed { get { return roleController.speed; } }
+    public float speed { get { return roleController.speed; } }
     float hp { get { return roleController.roleState.hp; } }
     public BloodView bloodView;
     public bool freeze;//禁止移动
-    public BlockView curBlock;
+    public BlockView curBlock { get { return getCurBlock(); } }
+    public CoronaView coronaView;
+    public Button digBtn;
     bool _locked;
     public bool Locked
     {
@@ -27,10 +29,18 @@ public class RoleView : MonoBehaviour
     public void Init(RoleController roleController)
     {
         this.roleController = roleController;
+        digBtn.onClick.AddListener(() =>
+        {
+            if (curBlock && !_locked)
+            {
+                curBlock.onUse();
+            }
+        });
     }
 
     public void onMove()
     {
+        //键盘操作
         float moveX = Input.GetAxisRaw("Horizontal");//按D键为1，A键为-1
         float moveY = Input.GetAxisRaw("Vertical");//按W键为1，按S键为-1
         Vector3 position = transform.position;
@@ -39,6 +49,13 @@ public class RoleView : MonoBehaviour
         else//斜方向移动，位移乘根号2，保证移动速度不变
             position += (moveX * speed * Time.deltaTime * transform.right * Mathf.Sqrt(2) / 2 + moveY * speed * Time.deltaTime * transform.up * Mathf.Sqrt(2) / 2);
         transform.position = position;
+
+        //轮盘操作
+        Vector3 direction;
+        if (coronaView.TryGetDirection(out direction))
+        {
+            transform.position += direction * speed * Time.deltaTime;
+        }
     }
 
     public void Knockback(Vector3 force, float duration = 0.3f)
@@ -68,7 +85,7 @@ public class RoleView : MonoBehaviour
         {
             onMove();
         }
-        curBlock = getCurBlock();
+
         if (curBlock != null)
         {
             if (curBlock != lastBlockView)//踩到了新的方块
@@ -77,7 +94,7 @@ public class RoleView : MonoBehaviour
                     lastBlockView.setSelected(false);
                 curBlock.setSelected(true);
                 lastBlockView = curBlock;
-                roleController.onCoordinateChange();
+                roleController.OnCoordinateChange();
             }
             if (!_locked && Input.GetKey(KeyCode.Space))//空格挖地
             {

@@ -7,11 +7,15 @@ public class RoleController
 {
     public RoleState roleState;
     public float speed { get { return roleState.speed * totalFactor; } }
+    public float natureBleedNum = 3;//自然留血量
     Vector3 _forwardDirection;
     Vector3 forwardDirection { set { _forwardDirection = value; } get { return _forwardDirection; } }
+
     public RoleView roleView;
     public BloodView bloodView;
     public DamageView damageView;
+    public EnergyView energyView;
+
     RoleConfigData roleConfigData;
     public Vector3 characterPosition { get { return roleView.gameObject.transform.position; } }
     public Vector2Int characterCoordinate { get { return roleView.curBlock.coordinate; } }
@@ -21,16 +25,25 @@ public class RoleController
     public void Init()
     {
         Debug.Log("RoleController Init.");
-        roleState = new RoleState();
-        roleView = GameObject.Find("Player").GetComponent<RoleView>();
-        roleView.Init(this);
+
         roleConfigData = new RoleConfigData();
         roleConfigData.load();
-        roleState.Init(1, roleConfigData);//for test
+
+
+        roleState = new RoleState();
+        roleState.Init(1, roleConfigData);
+
+        roleView = GameObject.Find("Player").GetComponent<RoleView>();
+        roleView.Init(this);
+
         bloodView = GameObject.Find("BloodBar").GetComponent<BloodView>();
         bloodView.Init(this);
+
         damageView = new DamageView();
         damageView.Init();
+
+        energyView = GameObject.Find("EnergyBar").GetComponent<EnergyView>();
+        energyView.Init(3);// 写死
     }
 
     //duration持续时间，以s为单位
@@ -117,9 +130,20 @@ public class RoleController
         roleState.save(id);
     }
 
-    public void onCoordinateChange()
+    public void OnCoordinateChange()
     {
         if (coordinateChange != null)
             coordinateChange();
+    }
+
+    public void ConsumeEnergy()
+    {
+        energyView.energy = energyView.energy - 1;
+    }
+
+    //自然体力流失
+    public void natureBleed()
+    {
+        Bleed(natureBleedNum, 3600);
     }
 }

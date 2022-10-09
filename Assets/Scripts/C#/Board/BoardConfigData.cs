@@ -29,7 +29,6 @@ public class BoardConfigItem : ConfigItem
     public int episode;//关卡数，主键
     public int length;//长度
     public int width;//宽度
-    public int difficulty;//难度
 
     public override string getMainKey()
     {

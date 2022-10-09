@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //跟踪
-public class Follower : MonoBehaviour
+public class Follower : Creater
 {
     Transform masterTransform;
     public float distance;
@@ -11,6 +11,7 @@ public class Follower : MonoBehaviour
     private bool isPlaying = false;
     public Follower Init(Transform masterTransform)
     {
+        Init();
         this.masterTransform = masterTransform;
         return this;
     }
@@ -27,6 +28,7 @@ public class Follower : MonoBehaviour
 
     void Update()
     {
+        if (isPause) return;
         if (isPlaying)
         {
             Vector3 curDistance = masterTransform.position - transform.position;

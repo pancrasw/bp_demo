@@ -21,6 +21,8 @@ public class BoardView : MonoBehaviour
     public GameObject fireflyPrefab;
     public GameObject sheildPrefab;
     public GameObject batPrefab;
+    public GameObject lanterFruitPrefab;
+
     public void Init(BoardController boardController)
     {
         this.boardController = boardController;
@@ -60,8 +62,8 @@ public class BoardView : MonoBehaviour
                 BlockType type = boardController.getBlock(x, y);
                 blockGOs[y, x] = Instantiate(blockPrefab);
                 BlockView blockView = blockGOs[y, x].GetComponent<BlockView>();
-                blockView.Init(this);
                 blockView.transform.SetParent(transform);
+                blockView.Init(this);
                 blockView.coordinate = new Vector2Int(x, y);
 
             }

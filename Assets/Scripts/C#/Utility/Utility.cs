@@ -42,6 +42,42 @@ public class Utility
         b = a;
         a = temp;
     }
+
+    //基于随机快排的洗牌算法
+    public static void shuffle<T>(List<T> list)
+    {
+        helpShuffle(list, 0, list.Count);
+    }
+
+    static void helpShuffle<T>(List<T> list, int start, int end)
+    {
+        if (start >= end - 1)
+            return;
+        int pivotIndex = end - 1;
+        int lessIndex = start;
+        int moreIndex = start;
+        for (int i = start; i < pivotIndex; i++)
+        {
+            if (Random.Range(0, 1) == 0)
+            {
+                swap(list[lessIndex], list[i]);
+                lessIndex++;
+                moreIndex++;
+            }
+            else
+            {
+                moreIndex++;
+            }
+        }
+        if (lessIndex < list.Count)
+        {
+            swap(list[lessIndex], list[pivotIndex]);
+            helpShuffle(list, lessIndex, end);
+        }
+        helpShuffle(list, start, lessIndex);
+
+    }
+
 }
 
 //最小堆

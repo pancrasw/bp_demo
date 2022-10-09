@@ -1,0 +1,51 @@
+[
+    {
+        "blockType": "Firefly",
+        "configID": 0,
+        "weight": 10,
+        "fixedCount": 0,
+        "stayTime": 10
+    },
+    {
+        "blockType": "LanternFruit",
+        "configID": 0,
+        "weight": 20,
+        "fixedCount": 0,
+        "stayTime": 1
+    },
+    {
+        "blockType": "Sheild",
+        "configID": 0,
+        "weight": 10,
+        "fixedCount": 0,
+        "stayTime": 10
+    },
+    {
+        "blockType": "Bat",
+        "configID": 0,
+        "weight": 10,
+        "fixedCount": 0,
+        "stayTime": 1
+    },
+    {
+        "blockType": "Bramble",
+        "configID": 0,
+        "weight": 10,
+        "fixedCount": 0,
+        "stayTime": 3
+    },
+    {
+        "blockType": "Key",
+        "configID": 0,
+        "weight": 0,
+        "fixedCount": 3,
+        "stayTime": 0
+    },
+    {
+        "blockType": "Normal",
+        "configID": 0,
+        "weight": 30,
+        "fixedCount": 0,
+        "stayTime": 0
+    }
+]

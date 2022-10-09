@@ -1,1 +1,17 @@
-[{"episode": 1, "length": 6, "width": 6, "difficulty": 1}]
+[
+    {
+        "episode": 1,
+        "length": 5,
+        "width": 5
+    },
+    {
+        "episode": 2,
+        "length": 6,
+        "width": 6
+    },
+    {
+        "episode": 3,
+        "length": 7,
+        "width": 7
+    }
+]

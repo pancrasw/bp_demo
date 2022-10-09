@@ -1,31 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class BoardController
 {
     BoardConfigItem cur_board;//当前关卡配置
-    public int curEpisodeID { get { return _cur_episode; } }
-
-    int _cur_episode = -1;//当前关卡序号
     BoardConfigData boardConfigData;
+
+    public int curEpisodeID { get { return _cur_episode; } }
+    int _cur_episode = -1;//当前关卡序号
     EpisodeConfigData episodeConfigData;
+
     public int width { get { return cur_board.width; } }
     public int height { get { return cur_board.length; } }
 
     public BlockType[,] grid;//数据
     public int[,] gridIsBenefit;//是否为好方块，1为正面方块，0为中立，-1为负面方块
     BoardView boardView;//地块视图
+
     public callback selectBloclChangeCallback;
     public BlockView selectedBlock;
+
+    int keyCount = 0;//胜利条件
+
     public delegate bool JudegeFunction(Vector2Int coordinate);
     public void Init()
     {
+        episodeConfigData = new EpisodeConfigData();
+
         InitConfigData();
         setEpisode(1);
-
-        episodeConfigData = new EpisodeConfigData();
-        episodeConfigData.load(curEpisodeID);
     }
 
     public void InitConfigData()
@@ -37,6 +43,8 @@ public class BoardController
     //关卡切换
     public void setEpisode(int episode)
     {
+        episodeConfigData.load(episode);
+
         cur_board = boardConfigData.getBoardConfigItemByEpisode(episode);
         if (cur_board != null)//能取到关卡配置
             _cur_episode = episode;
@@ -45,7 +53,9 @@ public class BoardController
             boardView = GameObject.Find("BoardView").GetComponent<BoardView>();
             boardView.Init(this);
         }
+
         randomizeAllBlock();
+
         boardView.refreshBoard();
     }
 
@@ -57,22 +67,47 @@ public class BoardController
         float totalWeight = episodeConfigData.getTotalWeight();
         int blockTotalCount = width * height;
         List<BlockType> randomBlockList = new List<BlockType>();
+        int blockCount;
         foreach (EpisodeConfigItem episodeConfigItem in episodeConfigData.data)
         {
-            int blockCount = (int)(episodeConfigItem.weight * blockTotalCount);
+            if (episodeConfigItem.fixedCount != 0)
+                blockCount = episodeConfigItem.fixedCount;
+            else
+                blockCount = (int)(episodeConfigItem.weight * blockTotalCount / totalWeight);
             for (int i = 0; i < blockCount; i++)
             {
-                
+                randomBlockList.Add(episodeConfigItem.blockTypeEnum);
             }
         }
 
-        for (int x = 0; x < width; x++)
+        if (randomBlockList.Count < blockTotalCount)//如果还有剩余方块未生成，则按概率随机生成
+        {
+            int remainBlockCount = blockTotalCount - randomBlockList.Count;
+            for (int i = 0; i < remainBlockCount; i++)
+            {
+                float randInt = Random.Range(0, totalWeight);
+                float tempWeight = 0;
+                for (int j = 0; j < episodeConfigData.data.Length; j++)
+                {
+                    tempWeight += episodeConfigData.data[j].weight;
+                    if (tempWeight >= randInt)
+                    {
+                        randomBlockList.Add(episodeConfigData.data[j].blockTypeEnum);
+                        break;
+                    }
+                }
+            }
+        }
+
+        Utility.shuffle(randomBlockList);
+
+        //填入grid;
+        for (int x = 0, i = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-
-                int type = Random.Range(0, Game.BLOCK_TYPE_COUNT);
-                grid[x, y] = (BlockType)type;
+                grid[x, y] = randomBlockList[i];
+                i++;
             }
         }
     }
@@ -101,6 +136,11 @@ public class BoardController
                 GameObject keyGO = GameObject.Instantiate(boardView.keyPrefab);
                 keyGO.transform.position = new Vector3(blockView.transform.position.x, blockView.transform.position.y, keyGO.transform.position.z);
                 keyGO.GetComponent<Follower>().Init(roleController.GetRoleTransform()).Play();
+                keyCount++;
+                if (keyCount == 3)//胜利
+                {
+                    onWin();
+                }
                 break;
             // case BlockType.Zombie:
             //     GameObject zombieGO = GameObject.Instantiate(boardView.zombiePrefab);
@@ -118,6 +158,10 @@ public class BoardController
             case BlockType.Bat:
                 GameObject batGO = GameObject.Instantiate(boardView.batPrefab);
                 batGO.GetComponent<Bat>().Init(blockView, roleController.GetRoleTransform());
+                break;
+            case BlockType.LanternFruit:
+                GameObject lanternFruitGO = GameObject.Instantiate(boardView.lanterFruitPrefab);
+                lanternFruitGO.GetComponent<LanternFruit>().Init(blockView);
                 break;
         }
     }
@@ -202,5 +246,37 @@ public class BoardController
             return boardView.blockGOs[coordinate.y, coordinate.x].GetComponent<BlockView>();
         }
         return null;
+    }
+
+    void onWin()
+    {
+        Game.delayCall(() =>
+        {
+            float episodeChangeDuration = 1.5f;
+
+            Image mask = GameObject.Find("Mask").GetComponent<Image>();
+            mask.DOFade(1, episodeChangeDuration);
+
+            Game.GetInstance().OnPause();
+
+            //角色上锁
+            Game.GetInstance().mainCharacterController.roleView.Locked = true;
+            //消耗体力
+            Game.GetInstance().mainCharacterController.ConsumeEnergy();
+
+            Game.delayCall(() =>
+            {
+                Game.GetInstance().onPass();
+                setEpisode(curEpisodeID + 1);
+
+                Game.delayCall(() =>
+                    {
+                        Game.GetInstance().OnContinue();
+                        mask.DOFade(0, episodeChangeDuration);
+                        //角色解锁
+                        Game.GetInstance().mainCharacterController.roleView.Locked = false;
+                    }, episodeChangeDuration);
+            }, episodeChangeDuration);
+        }, 1);
     }
 }

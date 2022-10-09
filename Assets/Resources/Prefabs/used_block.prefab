@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3094830326975825318}
   - component: {fileID: 4992672145868583223}
   m_Layer: 0
-  m_Name: tileset_69
+  m_Name: used_block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 2124553389541247123}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.1250262, y: 3.1244729, z: 1}
+  m_LocalScale: {x: 0.71, y: 0.75, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -68,7 +68,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300138, guid: fa9008ba27d044823835d85918621932, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2531135055d82c64cb5061ceb6185bfd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

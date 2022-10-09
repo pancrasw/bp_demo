@@ -10,6 +10,7 @@ public class TimerController : MonoBehaviour
     List<SecondTimer> secondTimers;
     List<CompleteCallback> secondTimersCompeletCallback;
     Text gameTimeText;
+
     public void Init()
     {
         Debug.Log("TimerController init.");
@@ -19,7 +20,9 @@ public class TimerController : MonoBehaviour
         });
         secondTimers = new List<SecondTimer>();
         secondTimersCompeletCallback = new List<CompleteCallback>();
-        gameTimeText = GameObject.Find("Time").GetComponent<Text>();
+        //gameTimeText = GameObject.Find("Time").GetComponent<Text>();
+
+        Game.GetInstance().mainCharacterController.natureBleed();
     }
     public void addSecondTimer(int times, CallbackPerSecond callbackPerSecond, CompleteCallback completeCallback = null)
     {
@@ -72,6 +75,6 @@ public class TimerController : MonoBehaviour
     {
         updateSecondTimer();
         updateTimer();
-        gameTimeText.text = ((int)(Time.unscaledTime)).ToString();
+        //gameTimeText.text = ((int)(Time.unscaledTime)).ToString();
     }
 }
