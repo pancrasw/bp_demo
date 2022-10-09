@@ -8,6 +8,7 @@ public class RoleState
     public float speed;
     public float hp;
     public float hpLimit;
+
     public int energy;
     Direction faceDirection;
     public int level;

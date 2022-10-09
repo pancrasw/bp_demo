@@ -11,7 +11,7 @@ public class ConfigManager:Manager
 
     public ConfigManager()
     {
-        CONFIG_PATH = Path.CONFIG_PATH;
+        CONFIG_PATH = LocalPath.CONFIG_PATH;
         configRawData = new Dictionary<string, string>();
     }
 

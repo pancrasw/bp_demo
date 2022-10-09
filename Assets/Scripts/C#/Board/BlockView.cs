@@ -19,7 +19,7 @@ public class BlockView : MonoBehaviour
     bool _used;
     public GameObject normalGameObject;
     public GameObject usedGameObject;
-
+    public bool used { get { return _used; } }
     public void Init(BoardView boardView)
     {
         this.boardView = boardView;

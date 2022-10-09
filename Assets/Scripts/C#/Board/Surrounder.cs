@@ -65,8 +65,6 @@ public class Surrounder : MonoBehaviour
             }
             else
                 transform.RotateAround(transform.parent.transform.position, Vector3.forward, roundSpeed * Time.deltaTime);
-                Debug.Log(roundSpeed * Time.deltaTime);
-                
         }
     }
 }

@@ -15,6 +15,7 @@ public enum BlockType
     LanternFruit,//灯笼果
     Bramble,//荆棘
     Bat,//蝙蝠
+
     Last,//空，用于计数
 }
 
@@ -31,10 +32,6 @@ public enum Layer
     Role = 0,
 }
 
-public enum Direction
-{
-    UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT
-}
 
 public delegate void saveFunc(int id);
 
@@ -101,8 +98,7 @@ public class Game
         blockBiasMap.Add(BlockType.Firefly, BlockBias.Benifit);
         blockBiasMap.Add(BlockType.Sheild, BlockBias.Benifit);
 
-        translation = new Dictionary<BlockType, string>();
-        translation.Add(BlockType.Chest, "Chest");
+        blockBiasMap.Add(BlockType.Bat, BlockBias.Harmful);
     }
 
     public void Init()

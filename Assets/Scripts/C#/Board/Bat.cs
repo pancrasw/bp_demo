@@ -5,14 +5,18 @@ using UnityEngine;
 public class Bat : MonoBehaviour
 {
     public float forceFactor;//击退的力度
+    public float firstDamage;//初始伤害
     public float damage;//伤害
     public float attackCD;//攻击后停顿
     public float stayTime;//停留时间
+    bool isFirstAttack = true;
     Follower follower;
     Timer attackCDTimer;
     public void Init(BlockView startBlock, Transform roleTransform)
     {
         transform.position = new Vector3(startBlock.transform.position.x, startBlock.transform.position.y, transform.position.z);
+
+        follower = GetComponent<Follower>();
         follower.Init(roleTransform);
         follower.Play();
 
@@ -34,7 +38,17 @@ public class Bat : MonoBehaviour
             RoleView roleView = other.GetComponent<RoleView>();
             Vector3 force = Vector3.Normalize(roleView.transform.position - transform.position) * forceFactor;
             roleView.Knockback(force);
-            roleView.roleController.ReduceBlood(damage);
+            if (isFirstAttack)
+            {
+                if (firstDamage != 0)
+                    roleView.roleController.ReduceBlood(firstDamage);
+                isFirstAttack = false;
+            }
+            else
+            {
+                roleView.roleController.ReduceBlood(damage);
+            }
+
 
             follower.Stop();
             attackCDTimer = Game.delayCall(() =>

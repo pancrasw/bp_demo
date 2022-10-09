@@ -30,7 +30,6 @@ public class TimerController : MonoBehaviour
     {
         Timer newTimer = new Timer(durationMS, completeCallback);
         timerHeap.Add(newTimer);
-        Debug.Log(timerHeap.Count);
         return newTimer;
     }
     public void removeTimer(Timer timer)
