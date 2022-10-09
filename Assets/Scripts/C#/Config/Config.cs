@@ -5,7 +5,7 @@ public abstract class ConfigItem
     public abstract string getMainKey();
 }
 
-//ÅäÖÃÎÄ¼şÈİÆ÷Àà
+
 public class ConfigItemAry
 {
     ConfigItem[] configs;

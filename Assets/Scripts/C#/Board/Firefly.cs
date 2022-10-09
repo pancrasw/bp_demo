@@ -55,6 +55,19 @@ public class Firefly : MonoBehaviour
     {
 
     }
+}
 
+public class FireflyConfigData
+{
+    public struct FireflyConfigItem
+    {
+        int configID;
+        int checkDistance;
+    }
 
+    public FireflyConfigItem[] configData;
+    public void InitConfig()
+    {
+        configData = Game.GetInstance().configManager.GetConfigDataAry<FireflyConfigItem>("Board.Firefly");
+    }
 }

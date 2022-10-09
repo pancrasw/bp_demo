@@ -5,13 +5,16 @@ using UnityEngine;
 public enum BlockType
 {
     Normal,
-    Mine,//地雷
+    //Mine,//地雷
     Chest,//宝箱
     Key,//钥匙
     //Bomb,//炸弹
     //Zombie,//僵尸
     Firefly,//萤火虫
     Sheild,//护盾
+    LanternFruit,//灯笼果
+    Bramble,//荆棘
+    Bat,//蝙蝠
     Last,//空，用于计数
 }
 
@@ -66,6 +69,7 @@ public class Game
     public MessageController messageController;
 
     public Dictionary<BlockType, BlockBias> blockBiasMap;
+    public Dictionary<BlockType, string> translation;
 
     public static Game GetInstance()
     {
@@ -89,13 +93,16 @@ public class Game
         blockBiasMap = new Dictionary<BlockType, BlockBias>();
         blockBiasMap.Add(BlockType.Normal, BlockBias.Neutral);
         //blockBiasMap.Add(BlockType.Bleed, BlockBias.Harmful);
-        blockBiasMap.Add(BlockType.Mine, BlockBias.Harmful);
+        //blockBiasMap.Add(BlockType.Mine, BlockBias.Harmful);
         blockBiasMap.Add(BlockType.Chest, BlockBias.Benifit);
         blockBiasMap.Add(BlockType.Key, BlockBias.Neutral);
         // blockBiasMap.Add(BlockType.Bomb, BlockBias.Harmful);
         // blockBiasMap.Add(BlockType.Zombie, BlockBias.Harmful);
         blockBiasMap.Add(BlockType.Firefly, BlockBias.Benifit);
         blockBiasMap.Add(BlockType.Sheild, BlockBias.Benifit);
+
+        translation = new Dictionary<BlockType, string>();
+        translation.Add(BlockType.Chest, "Chest");
     }
 
     public void Init()

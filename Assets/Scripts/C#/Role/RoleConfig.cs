@@ -25,5 +25,6 @@ public class RoleConfigItem
 {
     public int level;
     public int hp;//血量上限
-    public int speed;
+    public float speed;
+    public int energy;//体力值
 }

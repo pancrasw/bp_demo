@@ -5,8 +5,11 @@ using UnityEngine;
 public class BoardController
 {
     BoardConfigItem cur_board;//当前关卡配置
-    int cur_episode = -1;//当前关卡序号
+    public int curEpisodeID { get { return _cur_episode; } }
+
+    int _cur_episode = -1;//当前关卡序号
     BoardConfigData boardConfigData;
+    EpisodeConfigData episodeConfigData;
     public int width { get { return cur_board.width; } }
     public int height { get { return cur_board.length; } }
 
@@ -20,6 +23,9 @@ public class BoardController
     {
         InitConfigData();
         setEpisode(1);
+
+        episodeConfigData = new EpisodeConfigData();
+        episodeConfigData.load(curEpisodeID);
     }
 
     public void InitConfigData()
@@ -33,7 +39,7 @@ public class BoardController
     {
         cur_board = boardConfigData.getBoardConfigItemByEpisode(episode);
         if (cur_board != null)//能取到关卡配置
-            cur_episode = episode;
+            _cur_episode = episode;
         if (boardView == null)
         {
             boardView = GameObject.Find("BoardView").GetComponent<BoardView>();
@@ -43,13 +49,28 @@ public class BoardController
         boardView.refreshBoard();
     }
 
+    //随机算法
     private void randomizeAllBlock()
     {
         grid = new BlockType[width, height];
+
+        float totalWeight = episodeConfigData.getTotalWeight();
+        int blockTotalCount = width * height;
+        List<BlockType> randomBlockList = new List<BlockType>();
+        foreach (EpisodeConfigItem episodeConfigItem in episodeConfigData.data)
+        {
+            int blockCount = (int)(episodeConfigItem.weight * blockTotalCount);
+            for (int i = 0; i < blockCount; i++)
+            {
+                
+            }
+        }
+
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
+
                 int type = Random.Range(0, Game.BLOCK_TYPE_COUNT);
                 grid[x, y] = (BlockType)type;
             }
@@ -70,9 +91,9 @@ public class BoardController
         {
             case BlockType.Normal:
                 break;
-            case BlockType.Mine:
-                roleController.ReduceBlood(Random.Range(0, 10) * 5);
-                break;
+            // case BlockType.Mine:
+            //     roleController.ReduceBlood(Random.Range(0, 10) * 5);
+            //     break;
             case BlockType.Chest:
                 roleController.RestoreBlood(20);//for test写死
                 break;
@@ -165,7 +186,7 @@ public class BoardController
         if (isValidCoordinate(coordinate))
         {
             Vector3 blockPosition = boardView.blockGOs[coordinate.y, coordinate.x].transform.position;
-            return new Vector3(blockPosition.x, blockPosition.y, 0);
+            return new Vector3(blockPosition.x, blockPosition.y, Game.NORMAL_LAYER);
         }
         return Vector3.zero;
     }

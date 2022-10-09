@@ -8,6 +8,7 @@ public class RoleState
     public float speed;
     public float hp;
     public float hpLimit;
+    public int energy;
     Direction faceDirection;
     public int level;
 
@@ -16,8 +17,9 @@ public class RoleState
         this.level = level;
         Debug.Log("RoleState Init.");
         speed = roleConfigData.getRoleConfigItemByLevel(level).speed;
-        hp = 100;
         hpLimit = roleConfigData.getRoleConfigItemByLevel(level).hp;
+        energy = roleConfigData.getRoleConfigItemByLevel(level).energy;
+        hp = hpLimit;
     }
 
     //加载存档
