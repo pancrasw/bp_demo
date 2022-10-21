@@ -24,6 +24,7 @@ public class BlockView : MonoBehaviour
     {
         this.boardView = boardView;
         transform.localScale = new Vector3(Game.BLOCK_WIDTH, Game.BLOCK_HEIGHT);
+        setSelected(false);
     }
 
     //是否被使用
@@ -47,13 +48,14 @@ public class BlockView : MonoBehaviour
     {
         SpriteRenderer spriteRenderer = normalGameObject.GetComponent<SpriteRenderer>();
         if (selected)
-            spriteRenderer.color = new Color(0, 255, 255);//调为绿色
+            spriteRenderer.color = new Color(1, 1, 1, 0.3f);//调为半透明
         else
-            spriteRenderer.color = new Color(255, 255, 255, 0);//原色
+            spriteRenderer.color = new Color(1, 1, 1, 0);//透明
     }
 
     public void onUse()
     {
+        if (_used) return;
         setUsed(true);
         boardView.boardController.onUse(this);
     }

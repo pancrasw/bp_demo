@@ -28,13 +28,6 @@
         "stayTime": 1
     },
     {
-        "blockType": "Bramble",
-        "configID": 0,
-        "weight": 10,
-        "fixedCount": 0,
-        "stayTime": 3
-    },
-    {
         "blockType": "Key",
         "configID": 0,
         "weight": 0,
@@ -45,6 +38,13 @@
         "blockType": "Normal",
         "configID": 0,
         "weight": 30,
+        "fixedCount": 0,
+        "stayTime": 0
+    },
+    {
+        "blockType": "Marsh",
+        "configID": 0,
+        "weight": 20,
         "fixedCount": 0,
         "stayTime": 0
     }

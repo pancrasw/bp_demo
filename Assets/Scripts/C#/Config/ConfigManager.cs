@@ -4,44 +4,19 @@ using System.IO;
 using UnityEngine;
 using LitJson;
 
-public class ConfigManager:Manager
+public class ConfigManager : Manager
 {
-    readonly string CONFIG_PATH;
-    Dictionary<string,string> configRawData;
+    Dictionary<string, string> configRawData;
 
     public ConfigManager()
     {
-        CONFIG_PATH = LocalPath.CONFIG_PATH;
         configRawData = new Dictionary<string, string>();
     }
 
-    public override void Init()
-    {
-        LoadAllConfig();
-    }
-
-    public void LoadAllConfig()
-    {
-        DirectoryInfo dir = new DirectoryInfo(CONFIG_PATH);
-        if (!dir.Exists)
-        {
-            Debug.Log("CONFIG_PATH dir doesn't exist!");
-            return;
-        }
-        FileInfo[] files = dir.GetFiles();
-        foreach (FileInfo fileInfo in files)
-        {
-            if (fileInfo.Name.EndsWith(".json"))
-            {
-                Debug.Log(fileInfo.Name);
-                LoadConfig(fileInfo.Name);
-            }
-        }
-    }
-
+    public override void Init() { }
     public void LoadConfig(string name)
     {
-        string json_str = File.ReadAllText(CONFIG_PATH + "/" + name);
+        string json_str = Resources.Load<TextAsset>("Config/json/" + name).text;
         Debug.Log(json_str);
         configRawData.Add(name, json_str);
     }
@@ -50,10 +25,17 @@ public class ConfigManager:Manager
     public T[] GetConfigDataAry<T>(string name)
     {
         string json_str;
-        if (configRawData.TryGetValue(name + ".json", out json_str)) 
+        if (configRawData.TryGetValue(name, out json_str))
         {
             return JsonMapper.ToObject<T[]>(json_str);
         }
+        else
+        {
+            LoadConfig(name);
+            if (configRawData.TryGetValue(name, out json_str))
+                return JsonMapper.ToObject<T[]>(json_str);
+        }
+        Debug.Log(name + ".json doesn't exist");
         return null;
     }
 }

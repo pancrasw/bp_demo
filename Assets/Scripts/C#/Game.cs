@@ -15,6 +15,7 @@ public enum BlockType
     LanternFruit,//灯笼果
     Bramble,//荆棘
     Bat,//蝙蝠
+    Marsh,//沼泽
 
     Last,//空，用于计数
 }
@@ -109,6 +110,7 @@ public class Game
         translation.Add("Firefly", BlockType.Firefly);
         translation.Add("Key", BlockType.Key);
         translation.Add("Sheild", BlockType.Sheild);
+        translation.Add("Marsh", BlockType.Marsh);
     }
 
     public void Init()

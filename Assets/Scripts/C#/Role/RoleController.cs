@@ -6,7 +6,7 @@ using UnityEngine;
 public class RoleController
 {
     public RoleState roleState;
-    public float speed { get { return roleState.speed * totalFactor; } }
+    public float speed { get { return roleState.speed * getTotalSpeedFactor(); } }
     public float natureBleedNum = 3;//自然留血量
     Vector3 _forwardDirection;
     Vector3 forwardDirection { set { _forwardDirection = value; } get { return _forwardDirection; } }
@@ -19,7 +19,7 @@ public class RoleController
     RoleConfigData roleConfigData;
     public Vector3 characterPosition { get { return roleView.gameObject.transform.position; } }
     public Vector2Int characterCoordinate { get { return roleView.curBlock.coordinate; } }
-    public callback coordinateChange;
+    public event callback coordinateChange;
     public bool isSheilding { get { return bloodView.isSheilding; } set { bloodView.isSheilding = value; } }
 
     public void Init()
@@ -68,7 +68,6 @@ public class RoleController
     }
 
     List<float> speedFactorList;//加速减速buff列表
-    float totalFactor = 1;
 
     //返回注册的系数id
     public int registerSpeedFactor(float factor)
@@ -77,21 +76,57 @@ public class RoleController
         if (speedFactorList == null)
             speedFactorList = new List<float>();
         speedFactorList.Add(factor);
-        totalFactor *= factor;
+
+        if (factor == 0)
+            Game.GetInstance().mainCharacterController.roleView.Locked = true;
+
         return speedFactorList.Count - 1;
     }
 
     public void changeSpeedFactor(int id, float factor)
     {
         if (factor < 0 || id < 0 || id >= speedFactorList.Count) return;
-        totalFactor *= factor /= speedFactorList[id];
         speedFactorList[id] = factor;
+        if (factor == 0)
+            Game.GetInstance().mainCharacterController.roleView.freeze = true;
+
     }
 
     public void removeSpeedFactor(int id)
     {
-        totalFactor /= speedFactorList[id];
+        if (id < 0 || id >= speedFactorList.Count) return;
+        if (speedFactorList[id] == 0)
+        {
+            bool stillHaveZero = false;
+            for (int i = 0; i < speedFactorList.Count; i++)
+            {
+                if (speedFactorList[i] == 0 && i != id)
+                {
+                    stillHaveZero = true;
+                    break;
+                }
+            }
+
+            if (!stillHaveZero)
+            {
+                Game.GetInstance().mainCharacterController.roleView.freeze = false;
+            }
+        }
+
         speedFactorList.RemoveAt(id);
+    }
+
+    public float getTotalSpeedFactor()
+    {
+        if (speedFactorList == null || speedFactorList.Count == 0)
+            return 1;
+        float totalSpeedFactor = 1;
+        foreach (float speedFactor in speedFactorList)
+        {
+            totalSpeedFactor *= speedFactor;
+        }
+        Debug.Log(totalSpeedFactor);
+        return totalSpeedFactor;
     }
 
     public int GetHpLimit()

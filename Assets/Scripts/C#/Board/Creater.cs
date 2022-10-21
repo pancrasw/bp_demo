@@ -14,8 +14,7 @@ public class Creater : MonoBehaviour
     {
         passCallback = () =>
         {
-            if (gameObject != null)
-                Destroy(gameObject);
+            Destroy(gameObject);
         };
         Game.GetInstance().Pass += passCallback;
 
@@ -32,7 +31,7 @@ public class Creater : MonoBehaviour
         Game.GetInstance().Continue += continueCallback;
     }
 
-    void OnDestroy()
+    protected void OnDestroy()
     {
         Game.GetInstance().Pass -= passCallback;
         Game.GetInstance().Pause -= pauseCallback;

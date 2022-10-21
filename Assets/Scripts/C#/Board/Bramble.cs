@@ -30,7 +30,8 @@ public class Bramble : Creater
                 Game.GetInstance().timerController.removeTimer(attackCDTimer);
                 attackCDTimer = null;
             }
-            Destroy(gameObject);
+            if (this != null)
+                Destroy(gameObject);
         }, stayTime);
     }
 

@@ -22,6 +22,7 @@ public class BoardView : MonoBehaviour
     public GameObject sheildPrefab;
     public GameObject batPrefab;
     public GameObject lanterFruitPrefab;
+    public GameObject marshPrefab;
 
     public void Init(BoardController boardController)
     {

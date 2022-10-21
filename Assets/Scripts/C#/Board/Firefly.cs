@@ -15,6 +15,7 @@ public class Firefly : Creater
     {
         set
         {
+            if (gameObject == null) return;
             if (value)
             {
                 GetComponent<SpriteRenderer>().color = Color.yellow;
@@ -51,6 +52,7 @@ public class Firefly : Creater
 
         blockChangeCallback = () =>
         {
+            if (gameObject == null) return;
             var matrix = Game.GetInstance().boardController.searchBlockInDistance(mainCharacterController.characterCoordinate, checkDistance, judegeFunction);
             for (int distance = 0; distance < matrix.Count; distance++)
             {
@@ -66,11 +68,19 @@ public class Firefly : Creater
 
         Game.delayCall(() =>
         {
-            mainCharacterController.coordinateChange -= blockChangeCallback;
-            Destroy(gameObject);
+            if (this != null)
+                Destroy(gameObject);
         }, stayTime);
     }
+
+    new void OnDestroy()
+    {
+        Game.GetInstance().mainCharacterController.coordinateChange -= blockChangeCallback;
+        base.OnDestroy();
+    }
 }
+
+
 
 public class FireflyConfigData
 {

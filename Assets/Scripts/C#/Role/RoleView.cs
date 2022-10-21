@@ -40,6 +40,8 @@ public class RoleView : MonoBehaviour
 
     public void onMove()
     {
+        if (speed == 0) return;
+        
         //键盘操作
         float moveX = Input.GetAxisRaw("Horizontal");//按D键为1，A键为-1
         float moveY = Input.GetAxisRaw("Vertical");//按W键为1，按S键为-1

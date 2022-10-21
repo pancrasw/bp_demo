@@ -16,7 +16,8 @@ public class Sheild : MonoBehaviour
         Game.delayCall(() =>
         {
             Game.GetInstance().mainCharacterController.isSheilding = false;
-            Destroy(gameObject);
+            if (this != null)
+                Destroy(gameObject);
         }, stayTime);
     }
 }

@@ -4,8 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
+//地块排布和关卡选择
 public class BoardController
 {
+    Vector3[] place = { new Vector3(6.7f, 4.68f, 10f), new Vector3(6.85f, -12.21f, 10f) };
+
     BoardConfigItem cur_board;//当前关卡配置
     BoardConfigData boardConfigData;
 
@@ -41,7 +44,7 @@ public class BoardController
     }
 
     //关卡切换
-    public void setEpisode(int episode)
+    void setEpisode(int episode)
     {
         episodeConfigData.load(episode);
 
@@ -57,6 +60,8 @@ public class BoardController
         randomizeAllBlock();
 
         boardView.refreshBoard();
+
+        GameObject.Find("BackGround").transform.position = place[episode - 1];
     }
 
     //随机算法
@@ -139,6 +144,7 @@ public class BoardController
                 keyCount++;
                 if (keyCount == 3)//胜利
                 {
+                    keyCount = 0;
                     onWin();
                 }
                 break;
@@ -163,12 +169,16 @@ public class BoardController
                 GameObject lanternFruitGO = GameObject.Instantiate(boardView.lanterFruitPrefab);
                 lanternFruitGO.GetComponent<LanternFruit>().Init(blockView);
                 break;
+            case BlockType.Marsh:
+                GameObject marshGO = GameObject.Instantiate(boardView.marshPrefab);
+                marshGO.GetComponent<Marsh>().Init(blockView);
+                break;
         }
     }
 
     public bool isValidCoordinate(Vector2Int coordinate)
     {
-        return coordinate.x >= 0 && coordinate.x <= width && coordinate.y >= 0 && coordinate.y <= height;
+        return coordinate.x >= 0 && coordinate.x < width && coordinate.y >= 0 && coordinate.y < height;
     }
 
     bool defaultJudgeFunction(Vector2Int coordinate) { return true; }
@@ -193,9 +203,12 @@ public class BoardController
             if (queue.Count == 0)
             {
                 searchDistance++;
-                Utility.swap<Queue<Vector2Int>>(queue, nextQueue);
 
-                if (nextQueue.Count == 0 || searchDistance > distance)//如果没有添加新的元素或者搜索距离超出限制
+                Queue<Vector2Int> temp = nextQueue;//此处不知为何用Utility.swap交换无效
+                nextQueue = queue;
+                queue = temp;
+
+                if (searchDistance > distance)//如果没有添加新的元素或者搜索距离超出限制
                     break;
 
                 searchResult.Add(new List<Vector2Int>());
@@ -203,6 +216,7 @@ public class BoardController
             else
             {
                 Vector2Int coordinate = queue.Dequeue();
+
                 if (Game.GetInstance().boardController.isValidCoordinate(coordinate))
                 {
                     if (judegeFunction(coordinate) && !searchResult[searchDistance].Contains(coordinate))
@@ -214,10 +228,10 @@ public class BoardController
                     new Vector2Int(coordinate.x+1,coordinate.y),
                     new Vector2Int(coordinate.x-1,coordinate.y),
                     new Vector2Int(coordinate.x,coordinate.y+1),
-                    new Vector2Int(coordinate.x,coordinate.y-1),};
+                    new Vector2Int(coordinate.x,coordinate.y-1)};
                     foreach (Vector2Int nextCoordinate in nextCoordinates)
                     {
-                        if (!nextQueue.Contains(nextCoordinate))
+                        if (!nextQueue.Contains(nextCoordinate) && isValidCoordinate(nextCoordinate))
                         {
                             nextQueue.Enqueue(nextCoordinate);
                         }
@@ -252,31 +266,37 @@ public class BoardController
     {
         Game.delayCall(() =>
         {
-            float episodeChangeDuration = 1.5f;
+            changeEpisode(_cur_episode + 1);
+        }, 1);
+    }
 
-            Image mask = GameObject.Find("Mask").GetComponent<Image>();
-            mask.DOFade(1, episodeChangeDuration);
+    //切场景，包含动画
+    public void changeEpisode(int episode)
+    {
+        float episodeChangeDuration = 1.5f;
 
-            Game.GetInstance().OnPause();
+        Image mask = GameObject.Find("Mask").GetComponent<Image>();
+        mask.DOFade(1, episodeChangeDuration);
 
-            //角色上锁
-            Game.GetInstance().mainCharacterController.roleView.Locked = true;
-            //消耗体力
-            Game.GetInstance().mainCharacterController.ConsumeEnergy();
+        Game.GetInstance().OnPause();
+
+        //角色上锁
+        Game.GetInstance().mainCharacterController.roleView.Locked = true;
+        //消耗体力
+        Game.GetInstance().mainCharacterController.ConsumeEnergy();
+
+        Game.delayCall(() =>
+        {
+            Game.GetInstance().onPass();
+            setEpisode(episode);
 
             Game.delayCall(() =>
-            {
-                Game.GetInstance().onPass();
-                setEpisode(curEpisodeID + 1);
-
-                Game.delayCall(() =>
-                    {
-                        Game.GetInstance().OnContinue();
-                        mask.DOFade(0, episodeChangeDuration);
-                        //角色解锁
-                        Game.GetInstance().mainCharacterController.roleView.Locked = false;
-                    }, episodeChangeDuration);
-            }, episodeChangeDuration);
-        }, 1);
+                {
+                    Game.GetInstance().OnContinue();
+                    mask.DOFade(0, episodeChangeDuration);
+                    //角色解锁
+                    Game.GetInstance().mainCharacterController.roleView.Locked = false;
+                }, episodeChangeDuration);
+        }, episodeChangeDuration);
     }
 }

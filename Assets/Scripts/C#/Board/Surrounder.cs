@@ -44,7 +44,6 @@ public class Surrounder : MonoBehaviour
         {
             if (isChasing)
             {
-                Debug.Log("isChasing");
                 if (Vector3.Magnitude(transform.localPosition) > distance)
                     transform.localPosition = transform.localPosition - Vector3.Normalize(transform.localPosition) * chaseSpeed;
                 else
@@ -55,7 +54,6 @@ public class Surrounder : MonoBehaviour
             }
             else if (isDepart)
             {
-            Debug.Log("isDepart");
                 if (Vector3.Magnitude(transform.localPosition) < distance)
                     transform.localPosition = transform.localPosition + Vector3.Normalize(transform.localPosition) * chaseSpeed;
                 else

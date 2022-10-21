@@ -29,7 +29,8 @@ public class LanternFruit : Creater
         {
             RoleView roleView = other.GetComponent<RoleView>();
             Game.GetInstance().mainCharacterController.RestoreBlood(healPoint);
-            Destroy(gameObject);
+            if (this != null)
+                Destroy(gameObject);
         }
     }
 }

@@ -15,7 +15,7 @@ public class Bat : Creater
     public void Init(BlockView startBlock, Transform roleTransform)
     {
         Init();
-        
+
         transform.position = new Vector3(startBlock.transform.position.x, startBlock.transform.position.y, transform.position.z);
 
         follower = GetComponent<Follower>();
@@ -29,7 +29,8 @@ public class Bat : Creater
                 Game.GetInstance().timerController.removeTimer(attackCDTimer);
                 attackCDTimer = null;
             }
-            Destroy(gameObject);
+            if (this != null)
+                Destroy(gameObject);
         }, stayTime);
     }
 
